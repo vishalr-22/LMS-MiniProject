@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Homepage</title>
+        <link rel="stylesheet" type="text/css" href="../static/css/layout.css">
+    </head>
+    <body>
+        <h1>LIBRARY MANAGEMENT SYSTEM</h1>
+        <h2>Welcome to Admin Page</h2>
+        <div>
+            <a class="button" href="{{ url_for('add_book') }}">Add Book</a>
+            <a class="button" href="">Delete Book</a>
+            <a class="button" href="{{ url_for('view_book') }}">Show Books</a>
+            <a class="button" href="">Issue Book</a>
+            <a class="button" href="">Return Book</a>
+        </div>
+        <footer>
+            <p>Developed by: Piyush and Vishal</p>
+        </footer>
+    </body>
+</html>
