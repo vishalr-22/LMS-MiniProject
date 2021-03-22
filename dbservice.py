@@ -15,15 +15,82 @@ class dbservice:
 
     def create_table(self):
         self.dbcursor.execute(''' CREATE TABLE IF NOT EXISTS `Books` (
-            `BookID` INT NOT NULL AUTO_INCREMENT,
-            `Book_name` VARCHAR(40) NOT NULL,
+            `Book_ID` INT NOT NULL AUTO_INCREMENT,
+            `Title` VARCHAR(40) NOT NULL,
             `Author` VARCHAR(40) NOT NULL,
+            `Genre` VARCHAR(20) NOT NULL,
             `Publisher` VARCHAR(40) NOT NULL,
-            `Category` VARCHAR(20) NOT NULL,
             `Price` FLOAT NOT NULL,
             `Status` BOOL DEFAULT 1,
-            PRIMARY KEY(`BookID`)
-            );''')
+            PRIMARY KEY(`Book_ID`)
+        );''')
+
+        self.dbcursor.execute(''' CREATE TABLE IF NOT EXISTS `CD` (
+            `C_ID` INT NOT NULL AUTO_INCREMENT,
+            `Title` VARCHAR(40) NOT NULL,
+            `Author` VARCHAR(40) NOT NULL,
+            `Genre` VARCHAR(20) NOT NULL,
+            `Company` VARCHAR(40) NOT NULL,
+            `CD_type` VARCHAR(20) NOT NULL,
+            `Price` FLOAT NOT NULL,
+            `Status` BOOL DEFAULT 1,
+            PRIMARY KEY(`C_ID`)
+        );''')
+
+        self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `Magazine`(
+            `Magz_ID` INT NOT NULL AUTO_INCREMENT,
+            `Title` VARCHAR(40) NOT NULL,
+            `Company` VARCHAR(40) NOT NULL,
+            `Category` VARCHAR(20) NOT NULL,
+            `Price` FLOAT NOT NULL,
+            `Release_date` DATE NOT NULL,
+            PRIMARY KEY(`Magz_ID`) 
+        );''')
+
+        self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `Journal`(
+            `J_ID` INT NOT NULL AUTO_INCREMENT,
+            `Topic` VARCHAR(30) NOT NULL,
+            `Year` INT NOT NULL,
+            PRIMARY KEY(`J_ID`)
+        );''')
+
+        self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `Admin`(
+            `Admin_Id` INT NOT NULL AUTO_INCREMENT,
+            `Username` VARCHAR(25) NOT NULL UNIQUE,
+            `Password` VARCHAR(20) NOT NULL,
+            PRIMARY KEY(`Admin_Id`)
+        );''')
+
+        self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `User`(
+            `User_Id` INT NOT NULL AUTO_INCREMENT,
+            `First_Name` VARCHAR(25) NOT NULL,
+            `Last_name` VARCHAR(25),
+            `Phone` INT UNIQUE,
+            `Email` VARCHAR(40) NOT NULL,
+            `Username` VARCHAR(25) NOT NULL UNIQUE,
+            `Password` VARCHAR(20) NOT NULL,
+            PRIMARY KEY(`User_Id`)
+        );''')
+
+        self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `User_Issue`(
+            `User_Id` INT NOT NULL,
+            `Username` VARCHAR(25) NOT NULL,
+            `Book_Id` INT NOT NULL,
+            `Issue_date` DATE NOT NULL,
+            `Due_date` DATE NOT NULL,
+            `Extension` INT(2) DEFAULT 0,
+            FOREIGN KEY(`Username`) REFERENCES USER(`Username`) ON DELETE CASCADE,
+            FOREIGN KEY(`Book_Id`) REFERENCES BOOKS(`Book_Id`) ON DELETE CASCADE
+        );''')
+
+        self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `User_Issue`(
+            `User_Id` INT NOT NULL,
+            `Username` VARCHAR(25) NOT NULL,
+            `Book_Id` INT NOT NULL,
+            `Reserve_date` DATE NOT NULL,
+            FOREIGN KEY(`Username`) REFERENCES USER(`Username`) ON DELETE CASCADE,
+            FOREIGN KEY(`Book_Id`) REFERENCES BOOKS(`Book_Id`) ON DELETE CASCADE
+        );''')
 
         self.connector.commit()
 

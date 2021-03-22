@@ -21,13 +21,12 @@ def adminpage():
 def add_book():
     if request.method=='POST':
         table = 'Books'
-        name = request.form.get('name')
+        title = request.form.get('title')
         author = request.form.get('author')
         publisher = request.form.get('publisher')
-        category = request.form.get('category')
+        genre = request.form.get('genre')
         price = request.form.get('price')
-        status = request.form.get('status')
-        data = {'Book_name':name, 'Author':author, 'Publisher':publisher, 'Category':category, 'Price':price, 'Status':status}
+        data = {'Title':title, 'Author':author, 'Publisher':publisher, 'Genre':genre, 'Price':price}
         db.add_record(table, data)
         return render_template('add_book.html',text='New Book added!')
     return render_template('add_book.html')

@@ -37,8 +37,8 @@
         <form method="POST" action="{{ url_for('add_book') }}">
            
             <div class="mb-3">
-               <label for="exampleInputEmail1">Book name</label>
-               <input type="name" class="form-control" id="exampleInputName1" name="name" placeholder="Enter book name">
+               <label for="exampleInputEmail1">Book title</label>
+               <input type="name" class="form-control" id="exampleInputName1" name="title" placeholder="Enter book title">
                <small id="emailHelp" class="form-text text-muted"></small>
              </div>
              <div class="mb-3">
@@ -52,18 +52,13 @@
                 <small id="emailHelp" class="form-text text-muted"></small>
               </div>
              <div class="mb-3">
-                <label for="exampleInputEmail1">Category</label>
-                <input type="varchar" class="form-control" id="exampleInputEmail1" name="category" placeholder="Enter Category"><br>
+                <label for="exampleInputEmail1">Genre</label>
+                <input type="varchar" class="form-control" id="exampleInputEmail1" name="genre" placeholder="Enter Genre"><br>
                 <small id="emailHelp" class="form-text text-muted"></small>
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1">Price</label>
                 <input type="float" class="form-control" id="exampleInputEmailexampleInputEmail1" name="price" placeholder="Enter price">
-                <small id="emailHelp" class="form-text text-muted"></small>
-              </div>
-              <div class="mb-3">
-                <label for="exampleInputEmail1">Status</label>
-                <input type="boolean" class="form-control" id="exampleInputEmail1" name="status" placeholder="Status">
                 <small id="emailHelp" class="form-text text-muted"></small>
               </div>
              
