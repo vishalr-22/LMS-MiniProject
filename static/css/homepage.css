@@ -1,0 +1,25 @@
+body{
+    background-color:whitesmoke;
+}
+h2{
+    color:black;
+}
+#b1{
+    margin: 0px;
+    padding: 10px 70px 10px 70px;
+    font-size: 20px;
+        
+}
+#b2{
+    margin: 0px;
+    padding: 10px 66px 10px 66px;
+    font-size: 20px; 
+}
+div{
+    border: 3px solid black;
+    margin: auto;
+    text-align: center;
+    width: 40%;
+    padding-bottom: 5%;
+    margin-top: 5%;
+}
