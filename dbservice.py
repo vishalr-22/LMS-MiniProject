@@ -8,10 +8,10 @@ class dbservice:
         self.create_table()
     
     def connect_database(self):
-        self.connector = mysql.connect(host='127.0.0.1', user='root', password='vishal')
+        self.connector = mysql.connect(host='127.0.0.1', user='root', password='mysql27')
 
         self.dbcursor = self.connector.cursor()
-        self.dbcursor.execute('USE library_management_sys')
+        self.dbcursor.execute('USE library')
 
     def create_table(self):
         self.dbcursor.execute(''' CREATE TABLE IF NOT EXISTS `Books` (
@@ -123,6 +123,19 @@ class dbservice:
         self.dbcursor.execute(select_query)
         records = self.dbcursor.fetchall()
         return records
+
+    def delete_record(self, table_name, title):
+        if table_name == 'Journal':
+            delete_query = (f"DELETE FROM {table_name} WHERE Topic = %(title)s")
+            print(delete_query)
+        else:
+            delete_query = (f"DELETE FROM {table_name} WHERE Title = %(title)s")
+            print(delete_query)
+        try:
+            self.dbcursor.execute(delete_query, {'title':title})
+            self.connector.commit()
+        except Exception as e:
+            print(e)
 
     def update_record(self, table_name, Id, updated_data):
         set_values = ''

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>add option</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <style>
+            .col-md-4 col-md-offset-4{
+                text-align:center;
+                margin: auto;
+                width: 50%;
+            }
+            form{
+                border:4px solid black;
+                padding:10px 10px 10px 10px;
+                background-color: black;
+            }
+            form label{
+                text-align:left;
+                color:white;
+            }
+            body{
+                background-color:whitesmoke;
+            }
+            .col-md-4 col-md-offset-4{
+                    text-align: center;
+            }
+            .radio-container{
+                border-color: black;
+                font-size: 20px;
+                border: 4px solid black;
+                background-color: rgb(241, 185, 133);
+                text-align: center;
+                margin: auto;
+                width: 60%;
+            }
+            .radio-container label{
+                margin: 2%;
+                margin-left: 5%;
+            }
+            h2{
+                color:rgb(255, 246, 246);
+                text-align: center;
+            }
+        </style>
+           
+    </head>
+    <body>
+        
+        <div class="radio-container">
+            <label for="book">Book</label>
+            <input type="radio" name="radio" value="radio1" checked/>
+            
+            <label for="cd">CD</label>
+            <input type="radio" name="radio" value="radio2"/>
+
+            <label for="magazine">Magazine</label>
+            <input type="radio" name="radio" value="radio3"/>
+
+            <label for="journal">Journal</label>
+            <input type="radio" name="radio" value="radio4">
+        </div><br>
+
+        <center>
+
+        <div class="col-md-4 col-md-offset-4">
+            <form id="form1" method="POST" action="{{ url_for('add_book') }}">
+                <h2>Add new Book</h2>
+            
+                <div class="mb-3">
+                <label for="exampleInputEmail1">Book title</label>
+                <input type="name" class="form-control" id="exampleInputName1" name="title" placeholder="Enter book title">
+                <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1">Author</label>
+                    <input type="varchar" class="form-control" id="exampleInputEmail1" name="author" placeholder="Enter author name"><br>
+                    <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1">Publisher</label>
+                    <input type="varchar" class="form-control" id="exampleInputEmailexampleInputEmail1" name="publisher" placeholder="Enter publisher"><br>
+                    <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1">Genre</label>
+                    <input type="varchar" class="form-control" id="exampleInputEmail1" name="genre" placeholder="Enter Genre"><br>
+                    <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1">Price</label>
+                    <input type="float" class="form-control" id="exampleInputEmailexampleInputEmail1" name="price" placeholder="Enter price">
+                    <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                
+            <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+         </div>
+         <div class="col-md-4 col-md-offset-4">
+            <form id="form2" method="POST" action="{{ url_for('add_cd') }}">
+                <h2>Add new CD</h2>
+                <div class="mb-3">
+                <label for="exampleInputEmail1">CD title</label>
+                <input type="name" class="form-control" id="exampleInputName1" name="title" placeholder="Enter CD title">
+                <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1">Author</label>
+                    <input type="varchar" class="form-control" id="exampleInputEmail1" name="author" placeholder="Enter author name"><br>
+                    <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1">Genre</label>
+                    <input type="varchar" class="form-control" id="exampleInputEmail1" name="genre" placeholder="Enter Genre"><br>
+                    <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1">Company</label>
+                    <input type="varchar" class="form-control" id="exampleInputEmailexampleInputEmail1" name="company" placeholder="Enter company"><br>
+                    <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1">CD type</label>
+                    <input type="varchar" class="form-control" id="exampleInputEmailexampleInputEmail1" name="ctype" placeholder="Enter type"><br>
+                    <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1">Price</label>
+                    <input type="float" class="form-control" id="exampleInputEmailexampleInputEmail1" name="price" placeholder="Enter price">
+                    <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                
+            <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+         </div>
+         <div class="col-md-4 col-md-offset-4">
+            <form id="form3" method="POST" action="{{ url_for('add_magz') }}">
+                <h2>Add new Magazine</h2>
+                <div class="mb-3">
+                <label for="exampleInputEmail1">Magazine title</label>
+                <input type="name" class="form-control" id="exampleInputName1" name="title" placeholder="Enter magazine title">
+                <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1">Company</label>
+                    <input type="varchar" class="form-control" id="exampleInputEmailexampleInputEmail1" name="company" placeholder="Enter company"><br>
+                    <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1">Category</label>
+                    <input type="varchar" class="form-control" id="exampleInputEmail1" name="category" placeholder="Enter Category"><br>
+                    <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1">Release date</label>
+                    <input type="date" class="form-control" id="exampleInputEmail1" name="date" placeholder="Enter Release date"><br>
+                    <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1">Price</label>
+                    <input type="float" class="form-control" id="exampleInputEmailexampleInputEmail1" name="price" placeholder="Enter price">
+                    <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                
+            <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+         </div>
+         <div class="col-md-4 col-md-offset-4">
+            <form id="form4" method="POST" action="{{ url_for('add_journal') }}">
+                <h2>Add new Journal</h2>
+                <div class="mb-3">
+                <label for="exampleInputEmail1">Topic</label>
+                <input type="name" class="form-control" id="exampleInputName1" name="topic" placeholder="Enter journal topic">
+                <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1">Year</label>
+                    <input type="int" class="form-control" id="exampleInputEmail1" name="year" placeholder="Enter year"><br>
+                    <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+                
+            <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+         </div>
+        </center>
+
+         <script>
+            var radios = document.getElementsByName("radio");
+            var abook = document.getElementById("form1");
+            var acd = document.getElementById("form2");
+            var amagz = document.getElementById("form3");
+            var ajour = document.getElementById("form4");
+
+            
+            abook.style.display = 'block';
+            acd.style.display = 'none';
+            amagz.style.display = 'none';
+            ajour.style.display = 'none';
+    
+
+            for(var i = 0; i < radios.length; i++) {
+                radios[i].onclick = function() {
+                    var val = this.value;
+                    if(val == 'radio1'){  
+                        abook.style.display = 'block';
+                        acd.style.display = 'none';
+                        amagz.style.display = 'none';
+                        ajour.style.display = 'none';
+                    }
+                    else if(val == 'radio2'){
+                        abook.style.display = 'none';
+                        acd.style.display = 'block';
+                        amagz.style.display = 'none';
+                        ajour.style.display = 'none';
+                    }   
+                    else if(val == 'radio3'){
+                        abook.style.display = 'none';
+                        acd.style.display = 'none';
+                        amagz.style.display = 'block';
+                        ajour.style.display = 'none';
+                    } 
+                    else if(val == 'radio4'){
+                        abook.style.display = 'none';
+                        acd.style.display = 'none';
+                        amagz.style.display = 'none';
+                        ajour.style.display = 'block';
+                    }
+                }
+            }
+        </script>
+
+    </body>
+</html>
