@@ -119,4 +119,13 @@ def display(title):
     elif title == 'Journal':
         return render_template('view_journal.html', record=record)
 
+@app.route('/issue', methods=['POST', 'GET'])
+def issue():
+    if request.method=='POST':
+        table = 'User'
+        username = request.form.get('username')
+        user = db.fetch_column_data(table, ['Username', 'User_Id', 'First_name', 'Last_name', 'Email'], condition_name = 'Username', condition_value = username)
+        return render_template('issue.html', user = user)
+    return render_template('issue.html')
+
 
