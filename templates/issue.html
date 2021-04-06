@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Issue</title>
+        <link rel="stylesheet" type="text/css" href="../static/css/issue_ui.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <nav class="topnav">
+            <a class = "active" href="/">Home</a>
+        </nav>
+        <center>
+            <div class="col-md-4 col-md-offset-4">
+                <h2>Issue book</h2>
+                <form method="POST" action="{{ url_for('issue') }}" id="issue">
+                    <div class="mb-3">
+                        <table>
+                          <tr>
+                            <td>
+                              <label for="username">Username: <span class='required'>*</span> </label>
+                            </td>
+                            <td>
+                                <input type="varchar" class="form-control" id="exampleInputEmailexampleInputEmail1" name="username" placeholder="Enter Username" required>
+                            </td>
+                          </tr>
+              
+                          <tr>
+                            <td>
+                                <label for="title">Book title: <span class='required'>*</span> </label>
+                              </td>
+                              <td>
+                                  <input type="varchar" class="form-control" id="exampleInputEmailexampleInputEmail1" name="title" placeholder="Enter Title" required>
+                              </td>
+                          </tr>
+                        </table>
+                          
+                    </div>
+              
+                    <button type="submit" class="btn btn-primary">Issue</button>
+                </form>
+                <label for="Required" class="required">* Required</label>
+                {% if text %}
+                    <h3 style="text-align: center; color: green;">{{ text }}</h3>
+                {% endif %}
+            </div>
+        </center>
+    </body>
+</html>
