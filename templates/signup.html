@@ -18,18 +18,25 @@
         <h2>Sign Up</h2>
         <br>
         <h4>As</h4>
-        <div class="container">
+        <!-- <div class="container">
           <label>User</label>
           <input type="radio" name="radio" checked/>
           
           <label>&nbsp&nbsp&nbsp&nbspAdmin</label>
           <input type="radio" name="radio"/>
-        </div><br>
-
+        </div><br> -->
+        <!-- <div>
+          <a class="button" href="{{ url_for('signin_user') }}"><button type="submit" class="btn btn-primary">signin</button></a>
+        </div> -->
         <form method="POST" action="{{ url_for('signup') }}">
           <div class="mb-3">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" name="name" placeholder="Enter name">
+            <label for="fname">First Name</label>
+            <input type="text" class="form-control" name="fname" placeholder="Enter first name">
+            <small id="emailHelp" class="form-text text-muted"></small>
+          </div>
+          <div class="mb-3">
+            <label for="lname">Last Name</label>
+            <input type="text" class="form-control" name="lname" placeholder="Enter last name">
             <small id="emailHelp" class="form-text text-muted"></small>
           </div>
           <div class="mb-3">
@@ -37,11 +44,11 @@
             <input type="tel" class="form-control" name="phoneno" placeholder="Enter phone no"><br>
             <small id="emailHelp" class="form-text text-muted"></small>
           </div>
-          <div class="mb-3">
+          <!-- <div class="mb-3">
             <label for="dob">Date of Birth</label>
             <input type="date" class="form-control" name="dob" placeholder="Enter Date of birth"><br>
             <small id="emailHelp" class="form-text text-muted"></small>
-          </div>
+          </div> -->
           <div class="mb-3">
             <label for="email">E-mail</label>
             <input type="email" class="form-control" name="email" placeholder="enter email"><br>

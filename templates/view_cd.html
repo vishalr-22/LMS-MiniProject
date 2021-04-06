@@ -55,43 +55,45 @@
   </head>
   <body>
     <div class="topnav">
-      <a class="active" href="{{ url_for('display', title = 'Books') }}">Books</a>
-      <a href="{{ url_for('display', title = 'CD') }}">CDs</a>
+      <a href="{{ url_for('display', title = 'Books') }}">Books</a>
+      <a class="active" href="{{ url_for('display', title = 'CD') }}">CDs</a>
       <a href="{{ url_for('display', title = 'Magazine') }}">Magazines</a>
       <a href="{{ url_for('display', title = 'Journal') }}">Journals</a>
     </div>
     <center>
           
-        <h2 style="color: white;">Books catalogue</h2>
+        <h2 style="color: white;">CDs catalogue</h2>
         <div >
   
-        <table class="table table-hover" style='width: 700px;'>
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col"><b>Book ID</b></th>
-              <th scope="col"><b>BookName</b></th>
-              <th scope="col"><b>Author</b></th>
-              <th scope="col"><b>Publisher</b></th>
-              <th scope="col"><b>Genre</b></th>
-              <th scope="col"><b>Price</b></th>
-              <th scope="col"><b>Status</b></th>
-            </tr>
-          </thead>
-          <tbody>
-          {% for row in record %}
-            <tr>
-              <th scope="row">{{ row[0] }}</th>
-              <td><b>{{ row[1] }}</b></td>
-              <td><b>{{ row[2] }}</b></td>
-              <td><b>{{ row[3] }}</b></td>
-              <td><b>{{ row[4] }}</b></td>
-              <td><b>{{ row[5] }}</b></td>
-              <td><b>{{ row[6] }}</b></td>
-        
-            </tr>
-          {% endfor %}
-          </tbody>
-        </table>
+            <table class="table table-hover" style='width: 700px;'>
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col"><b>CD ID</b></th>
+                    <th scope="col"><b>Title</b></th>
+                    <th scope="col"><b>Author</b></th>
+                    <th scope="col"><b>Genre</b></th>
+                    <th scope="col"><b>Company</b></th>
+                    <th scope="col"><b>CD type</b></th>
+                    <th scope="col"><b>Price</b></th>
+                    <th scope="col"><b>Status</b></th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for row in record %}
+                  <tr>
+                    <th scope="row">{{ row[0] }}</th>
+                    <td><b>{{ row[1] }}</b></td>
+                    <td><b>{{ row[2] }}</b></td>
+                    <td><b>{{ row[3] }}</b></td>
+                    <td><b>{{ row[4] }}</b></td>
+                    <td><b>{{ row[5] }}</b></td>
+                    <td><b>{{ row[6] }}</b></td>
+                    <td><b>{{ row[7] }}</b></td>
+              
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
   
       </div>
            

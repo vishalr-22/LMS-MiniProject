@@ -1,6 +1,12 @@
 .col-md-4 col-md-offset-4{
     text-align:center;
 }
+.container{
+    border-color: black;
+    font-size: 20px;
+    border: 4px solid black;
+    background-color: rgb(241, 185, 133);
+  }
 form{
     border:4px solid black;
     padding:10px 10px 10px 10px;
