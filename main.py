@@ -1,6 +1,7 @@
-from flask import Flask, render_template,request, url_for, redirect, flash
+from flask import Flask, render_template, request, url_for, redirect, flash
 from dbservice import dbservice
 from datetime import datetime
+from datetime import timedelta
 
 app = Flask(__name__)
 app.secret_key = "super secret key"
@@ -123,9 +124,16 @@ def display(title):
 def issue():
     if request.method=='POST':
         table = 'User'
+        table2 = 'Books'
         username = request.form.get('username')
-        user = db.fetch_column_data(table, ['Username', 'User_Id', 'First_name', 'Last_name', 'Email'], condition_name = 'Username', condition_value = username)
-        return render_template('issue.html', user = user)
+        title = request.form.get('title')
+        issue_date = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
+        due_date = datetime.now() + timedelta(days = 10)
+        user = db.fetch_column_data(table, ['User_Id', 'Username'], condition_name = 'Username', condition_value = username)
+        book = db.fetch_column_data(table2, ['Book_Id', 'Title'], condition_name = 'Title', condition_value = title)
+        data = {'User_Id': user[0][0], 'Username': user[0][1], 'Book_Id': book[0][0], 'Issue_date': issue_date, 'Due_date': due_date}
+        db.add_record('User_Issue', data)
+        return render_template('issue.html', text = 'Book issued successfully...')
     return render_template('issue.html')
 
 

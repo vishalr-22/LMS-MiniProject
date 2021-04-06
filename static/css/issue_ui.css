@@ -63,15 +63,20 @@ body{
 }
 
 
-body{
-    background-size: cover; 
-    box-sizing: border-box; 
-    background-image: linear-gradient(180deg, rgba(0, 30, 53, 0.75), rgba(0, 30, 53, 0.75)), url('static/image/allback.jpg');
+table {
+    border-spacing: 15px;
+  }
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
 }
 
-table {
+.stretch{
+    width: 100%;
+}
 
-width: 100%;
-border-collapse: collapse;
-border: 3px solid white;
+.required{
+    color: red;
 }
