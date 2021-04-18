@@ -1,4 +1,7 @@
+from datetime import datetime
 import mysql.connector as mysql
+from datetime import datetime,date
+from datetime import timedelta
 
 class dbservice:
     def __init__(self):
@@ -134,17 +137,20 @@ class dbservice:
             print(e)
 
 
+    
     def signin_user(self, table_name, input_data):
         #keys = list(input_data.values())
         paswd = input_data["Password"]
+        user = input_data["Username"]
         print(paswd)
         #Preparing Query
         pwd = (f"SELECT Username FROM {table_name} WHERE Password = %(paswd)s")
         #if pwd != NULL:
-
+        # rec = (f"SELECT First_Name, Phone, Email FROM {table_name} WHERE Username = %(user)s")
         try:
             self.dbcursor.execute(pwd,{'paswd':paswd})
             records = self.dbcursor.fetchone()
+            
             if records == None:
                 return 0
             else:
@@ -154,6 +160,58 @@ class dbservice:
             print(e)
         return 0
     #mypart
+
+    # def fetch_issued_books(self, table_name, username):
+    #     select_query = (f'SELECT Reserve_date FROM {table_name} WHERE Username=%(user)s')
+
+    #     self.dbcursor.execute(select_query,{'user':username})
+    #     records = self.dbcursor.fetchone()
+    #     print("fjj")
+    #     print(records)
+    #     return records
+
+    def fetch_reserve_date(self, table_name, username):
+        select_query = (f'SELECT Reserve_date FROM {table_name} WHERE Username=%(user)s')
+
+        self.dbcursor.execute(select_query,{'user':username})
+        records = self.dbcursor.fetchone()
+        print("fjj")
+        print(records)
+        return records
+
+    def fetch_user_records(self, table_name, username):
+        select_query = (f'SELECT First_Name, Phone, Email FROM {table_name} WHERE Username=%(user)s')
+
+        self.dbcursor.execute(select_query,{'user':username})
+        records = self.dbcursor.fetchone()
+        print("fjj")
+        print(records)
+        return records
+    
+    def fetch_books_records(self, table_name, username):
+        #select_query = (f'SELECT First_Name, Phone, Email FROM {table_name} WHERE Username=%(user)s')
+        select_query = (f'SELECT Books.Book_Id,Title,Author,Genre,Publisher,Price,Issue_date,Due_date FROM books,{table_name} WHERE Books.Book_Id=user_issue.Book_Id AND Username=%(user)s') 
+        self.dbcursor.execute(select_query,{'user':username})
+        records = self.dbcursor.fetchall()
+        print("fjj1")
+        print(records)
+        return records
+    
+    def fine_calc(self, table_name, username):
+        select_query = (f'SELECT Due_date FROM {table_name} WHERE Username=%(user)s')        
+        self.dbcursor.execute(select_query,{'user':username})
+        records = self.dbcursor.fetchall()
+        lst = []
+        print(records)
+        print(datetime.now())
+        for i in records:
+            if i[0] < date.today():
+                lst.append(5*(i[0]-date.today()).days)
+            else:
+                lst.append(0)
+        print(lst)
+        return lst
+
     def signin_admin(self, table_name, input_data):
         #keys = list(input_data.values())
         paswd = input_data["Password"]
@@ -204,6 +262,7 @@ class dbservice:
         self.dbcursor.execute(select_query)
         records = self.dbcursor.fetchall()
         return records
+
 
     def delete_record(self, table_name, title):
         if table_name == 'Journal':

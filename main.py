@@ -15,10 +15,10 @@ def check_update_data(updated_data):
     return updated_data
 
 
-@app.route('/',methods=['POST','GET'])
+@app.route('/')
 def homepage():
-    if request.method=='POST':
-        return render_template('homepage.html')
+    # if request.method=='POST':
+    #     return render_template('homepage.html')
     return render_template('homepage.html')
 #mypart
 
@@ -45,13 +45,16 @@ def signin_user():
         username = request.form.get('username')
         upassword = request.form.get('upassword')
         data = {'Username':username ,'Password':upassword}
-        val = db.signin_admin(table, data)
+        val= db.signin_admin(table, data)
         if val == 1:
-            return render_template('studentdashboard.html')
+            record = db.fetch_user_records(table,username)
+            rec = db.fetch_books_records('user_issue',username)
+            # res_date = db.fetch_issued_books('')
+            fine = db.fine_calc('user_issue', username)
+            return render_template('studentdashboard.html',record=record,rec=rec,rec2=fine ,res_date='hello')
         else:
             return render_template('signin.html',text='Invalid Credentials!')
     return render_template('signin.html')
-
 
 @app.route('/signin_admin',methods=['POST','GET'])
 def signin_admin():
@@ -68,6 +71,12 @@ def signin_admin():
     return render_template('signin.html')
 #mypart
 
+@app.route('/studentdashboard',methods=['POST','GET'])
+def studentdashboard():
+    if request.method=='POST':
+        
+        return render_template('studentdashboard.html')
+    return render_template('studentdashboard.html')
 
 
 @app.route('/adminpage',methods=['POST','GET'])
@@ -75,6 +84,8 @@ def adminpage():
     if request.method=='POST':
         return render_template('adminpage.html')
     return render_template('adminpage.html')
+
+
 
 @app.route('/add_book',methods=['POST','GET'])
 def add_book():
@@ -119,17 +130,6 @@ def add_magz():
         return render_template('add_option.html', text='New Magazine added!')
     return render_template('add_option.html')
 
-@app.route('/add_journal',methods=['POST','GET'])
-def add_journal():
-    if request.method=='POST':
-        table = 'Journal'
-        topic = request.form.get('topic')
-        year = request.form.get('year')
-        data = {'Topic':topic, 'Year':year}
-        db.add_record(table, data)
-        db.add_record(table, data)
-        return render_template('add_option.html', text='New Magazine added!')
-    return render_template('add_option.html')
 
 @app.route('/add_journal',methods=['POST','GET'])
 def add_journal():
