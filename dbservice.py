@@ -24,7 +24,7 @@ class dbservice:
             `Genre` VARCHAR(20) NOT NULL,
             `Publisher` VARCHAR(40) NOT NULL,
             `Price` FLOAT NOT NULL,
-            `Status` BOOL DEFAULT 1,
+            `Status` TINYINT DEFAULT 2,
             PRIMARY KEY(`Book_ID`)
         );''')
 
@@ -36,7 +36,7 @@ class dbservice:
             `Company` VARCHAR(40) NOT NULL,
             `CD_type` VARCHAR(20) NOT NULL,
             `Price` FLOAT NOT NULL,
-            `Status` BOOL DEFAULT 1,
+            `Status` TINYINT DEFAULT 2,
             PRIMARY KEY(`C_ID`)
         );''')
 
@@ -180,7 +180,7 @@ class dbservice:
         return records
 
     def fetch_user_records(self, table_name, username):
-        select_query = (f'SELECT First_Name, Phone, Email FROM {table_name} WHERE Username=%(user)s')
+        select_query = (f'SELECT First_Name, Phone, Email, Last_name, Username FROM {table_name} WHERE Username=%(user)s')
 
         self.dbcursor.execute(select_query,{'user':username})
         records = self.dbcursor.fetchone()
