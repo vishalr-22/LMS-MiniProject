@@ -50,6 +50,19 @@
       color: white;
     }
 
+    #myInput {
+    background-image: url('/css/searchicon.png'); 
+    background-position: 10px 12px; 
+    background-repeat: no-repeat; 
+    margin: auto;
+    width: 50%; 
+    font-size: 16px; 
+    padding: 12px 20px 12px 40px; 
+    border: 1px solid #ddd; 
+    margin-top: 10px;
+    margin-bottom: 12px;
+  }
+
   </style>
   
   </head>
@@ -63,11 +76,12 @@
       <a href="{{ url_for('display', title = 'Journal') }}">Journals</a>
     </div>
     <center>
+      <input type="text" id="myInput" onkeyup="SearchFunction()" placeholder="Search for Magazines">
           
         <h2 style="color: white;">Magazines catalogue</h2>
         <div >
   
-            <table class="table table-hover" style='width: 700px;'>
+            <table id="myTable" class="table table-hover" style='width: 700px;'>
                 <thead class="thead-dark">
                   <tr>
                     <th scope="col"><b>Magazine ID</b></th>
@@ -96,7 +110,29 @@
       </div>
            
     </center>
+    <script>
+      function SearchFunction() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+      
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[0];
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          }
+        }
+      }
+      </script>
 
- 
 </body>
 </html>
