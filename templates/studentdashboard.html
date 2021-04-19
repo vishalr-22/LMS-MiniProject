@@ -105,15 +105,16 @@
                         {% if record %}
                         <tr>
                             <th class="studet">Name:</th>
-                            <td class="studet">{{ record[0] }}</td>
+                            <td class="studet">{{ record[0] }} {{ record[3] }}</td>
                             
                             <td>&nbsp&nbsp&nbsp&nbsp&nbsp</td>
-                            <th class="studet">Phone no:</th>
-                            <td  class="studet">{{ record[1] }}</td>
+                            <th class="studet">Username:</th>
+                            <td class="studet">{{ record[4] }}</td>
+                    
                         </tr>
                         <tr>
-                            <th class="studet">Date of Birth:</th>
-                            <td class="studet">18/03/2021</td>
+                            <th class="studet">Phone no:</th>
+                            <td  class="studet">{{ record[1] }}</td>
                             <td>&nbsp&nbsp&nbsp&nbsp&nbsp</td>
                             <th class="studet">Email:</th>
                             <td class="studet">{{ record[2] }}</td>
