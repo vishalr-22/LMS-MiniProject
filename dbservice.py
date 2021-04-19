@@ -11,10 +11,10 @@ class dbservice:
         self.create_table()
     
     def connect_database(self):
-        self.connector = mysql.connect(host='127.0.0.1', user='root', password='vishal')
+        self.connector = mysql.connect(host='127.0.0.1', user='root', password='mysql27')
 
         self.dbcursor = self.connector.cursor()
-        self.dbcursor.execute('USE library_management_sys')
+        self.dbcursor.execute('USE library')
 
     def create_table(self):
         self.dbcursor.execute(''' CREATE TABLE IF NOT EXISTS `Books` (
@@ -83,7 +83,18 @@ class dbservice:
             `Due_date` DATE NOT NULL,
             `Extension` INT(2) DEFAULT 0,
             FOREIGN KEY(`Username`) REFERENCES USER(`Username`) ON DELETE CASCADE,
-            FOREIGN KEY(`Book_Id`) REFERENCES BOOKS(`Book_Id`) ON DELETE CASCADE
+            FOREIGN KEY(`Book_Id`) REFERENCES BOOKS(`Book_ID`) ON DELETE CASCADE
+        );''')
+
+        self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `User_Issue2`(
+            `User_Id` INT NOT NULL,
+            `Username` VARCHAR(25) NOT NULL,
+            `C_Id` INT NOT NULL,
+            `Issue_date` DATE NOT NULL,
+            `Due_date` DATE NOT NULL,
+            `Extension` INT(2) DEFAULT 0,
+            FOREIGN KEY(`Username`) REFERENCES USER(`Username`) ON DELETE CASCADE,
+            FOREIGN KEY(`C_Id`) REFERENCES CD(`C_ID`) ON DELETE CASCADE
         );''')
 
         self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `User_Reserve`(
@@ -97,21 +108,6 @@ class dbservice:
 
         self.connector.commit()
 
-
-    #mypast
-    # def signin_admin(self, table_name, input_data):
-    #     keys = list(input_data.keys())
-        
-    #     #Preparing Query
-    #     pwd = (f'SELECT username FROM {table_name} WHERE password = {keys[1]}')
-    #     #if pwd != NULL:
-    #     try:
-    #         u = self.dbcursor.execute(pwd)
-    #         if u != none:
-    #             pass
-    #         self.connector.commit()
-    #     except Exception as e:
-    #         print(e)
         
     def signup(self, table_name, input_data):
         keys = list(input_data.keys())
@@ -159,6 +155,7 @@ class dbservice:
         except Exception as e:
             print(e)
         return 0
+    
     #mypart
 
     # def fetch_issued_books(self, table_name, username):
@@ -263,13 +260,19 @@ class dbservice:
         records = self.dbcursor.fetchall()
         return records
 
-
-    def delete_record(self, table_name, title):
-        if table_name == 'Journal':
-            delete_query = (f"DELETE FROM {table_name} WHERE Topic = %(title)s")
-            print(delete_query)
+    def delete_record(self, table_name, title, opt = 0):
+        if opt == 0:
+            if table_name == 'Journal':
+                delete_query = (f"DELETE FROM {table_name} WHERE Topic = %(title)s")
+                print(delete_query)
+            else:
+                delete_query = (f"DELETE FROM {table_name} WHERE Title = %(title)s")
+                print(delete_query)
         else:
-            delete_query = (f"DELETE FROM {table_name} WHERE Title = %(title)s")
+            if opt == 1:
+                delete_query = (f"DELETE FROM {table_name} WHERE Book_Id = %(title)s")
+            elif opt == 2:
+                delete_query = (f"DELETE FROM {table_name} WHERE C_Id = %(title)s")
             print(delete_query)
         try:
             self.dbcursor.execute(delete_query, {'title':title})
@@ -277,14 +280,17 @@ class dbservice:
         except Exception as e:
             print(e)
 
-    def update_record(self, table_name, Id, updated_data):
+    def update_record(self, table_name, Id, updated_data, opt):
         set_values = ''
 
         for i, columns in enumerate(updated_data.keys()):
             if i != len(updated_data.keys())-1:
                 set_values += f'{columns} = %({columns})s,'
             else:
-                set_values += f'{columns} = %({columns})s WHERE Id = %(Id)s'
+                if opt == 1:
+                    set_values += f'{columns} = %({columns})s WHERE Book_Id = %(Id)s'
+                elif opt == 2:
+                    set_values += f'{columns} = %({columns})s WHERE C_Id = %(Id)s'
         
         updated_data['Id'] = Id
         update_query = (f'UPDATE {table_name} SET '+ set_values)

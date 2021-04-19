@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Issue</title>
+        <title>Return</title>
         <link rel="stylesheet" type="text/css" href="../static/css/issue_ui.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -37,22 +37,13 @@
         </div><br>
         <center>
             <div id="div1" class="col-md-4 col-md-offset-4">
-                <h2>Issue book</h2>
-                <form id="form1" method="POST" action="{{ url_for('issue_book') }}" id="issue">
+                <h2>Return book</h2>
+                <form id="form1" method="POST" action="{{ url_for('return_book') }}" id="return">
                     <div class="mb-3">
                         <table>
                           <tr>
                             <td>
-                              <label for="username">Username: <span class='required'>*</span> </label>
-                            </td>
-                            <td>
-                                <input type="varchar" class="form-control" id="exampleInputEmailexampleInputEmail1" name="username" placeholder="Enter Username" required>
-                            </td>
-                          </tr>
-              
-                          <tr>
-                            <td>
-                                <label for="bookid">ID of Book to be issued: <span class='required'>*</span> </label>
+                                <label for="bookid">ID of Book to be returned: <span class='required'>*</span> </label>
                               </td>
                               <td>
                                   <input type="int" class="form-control" id="exampleInputEmailexampleInputEmail1" name="bookid" placeholder="Enter BookId" required>
@@ -62,7 +53,7 @@
                           
                     </div>
               
-                    <button type="submit" class="btn btn-primary">Issue</button>
+                    <button type="submit" class="btn btn-primary">Return</button>
                 </form>
                 <label for="Required" class="required">* Required</label>
                 {% if text %}
@@ -70,22 +61,14 @@
                 {% endif %}
             </div>
             <div id="div2" class="col-md-4 col-md-offset-4">
-                <h2>Issue CD</h2>
-                <form id="form2" method="POST" action="{{ url_for('issue_cd') }}" id="issue">
+                <h2>Return CD</h2>
+                <form id="form2" method="POST" action="{{ url_for('return_cd') }}" id="return">
                     <div class="mb-3">
                         <table>
-                          <tr>
-                            <td>
-                              <label for="username">Username: <span class='required'>*</span> </label>
-                            </td>
-                            <td>
-                                <input type="varchar" class="form-control" id="exampleInputEmailexampleInputEmail1" name="username" placeholder="Enter Username" required>
-                            </td>
-                          </tr>
               
                           <tr>
                             <td>
-                                <label for="cdid">ID of CD to be issued: <span class='required'>*</span> </label>
+                                <label for="cdid">ID of CD to be returned: <span class='required'>*</span> </label>
                               </td>
                               <td>
                                   <input type="int" class="form-control" id="exampleInputEmailexampleInputEmail1" name="cdid" placeholder="Enter CD Id" required>
@@ -95,7 +78,7 @@
                           
                     </div>
               
-                    <button type="submit" class="btn btn-primary">Issue</button>
+                    <button type="submit" class="btn btn-primary">Return</button>
                 </form>
                 <label for="Required" class="required">* Required</label>
                 {% if text %}
