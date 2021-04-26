@@ -34,9 +34,15 @@
                 text-align: left;
                 margin: 10px;
             }
+            .container ul{
+                width:100%;
+                margin: auto;
+                margin-left: 11%;
+            }
             ul{
                 list-style: none;
                 padding: 0px;
+                color: white;
             }
             ul li{
                 
@@ -44,10 +50,10 @@
                 width: 200px;
                 height: 40px;
                 background-color: black;
-                color: white;
+                color: white ;
                 line-height: 40px;
                 text-align: center;
-                
+                text-decoration: none;
             }
             ul li a{
                 text-decoration: none;
@@ -55,6 +61,8 @@
             }
             ul li a:hover{
                 background-color:rgb(207, 130, 238);
+                text-decoration: none;
+                color: white;
             }
             ul li ul li{
                 display:none;
@@ -63,6 +71,19 @@
             ul li:hover ul li{
                 display: block;
                 cursor: pointer;
+            }
+            .radio-container{
+                border-color: black;
+                font-size: 20px;
+                border: 4px solid black;
+                background-color: rgb(241, 185, 133);
+                text-align: center;
+                margin: auto;
+                width: 60%;
+            }
+            .radio-container label{
+                margin: 2%;
+                margin-left: 5%;
             }
             .BookDetails{
                 border: 1px solid black;
@@ -101,95 +122,219 @@
                 <h3>Student Details</h3>
                 <div>
                     <div class="table-responsive">
-                    <table class="container" id="studettable">
-                        {% if record %}
-                        <tr>
-                            <th class="studet">Name:</th>
-                            <td class="studet">{{ record[0] }} {{ record[3] }}</td>
-                            
-                            <td>&nbsp&nbsp&nbsp&nbsp&nbsp</td>
-                            <th class="studet">Username:</th>
-                            <td class="studet">{{ record[4] }}</td>
-                    
-                        </tr>
-                        <tr>
-                            <th class="studet">Phone no:</th>
-                            <td  class="studet">{{ record[1] }}</td>
-                            <td>&nbsp&nbsp&nbsp&nbsp&nbsp</td>
-                            <th class="studet">Email:</th>
-                            <td class="studet">{{ record[2] }}</td>
-                        </tr>
-                        {% endif %}
-                    </table>
-                </div>
+                        <table class="container" id="studettable">
+                            {% if record %}
+                            <tr>
+                                <th class="studet">Name:</th>
+                                <td class="studet">{{ record[0] }} {{ record[3] }}</td>
+                                
+                                <td>&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+                                <th class="studet">Username:</th>
+                                <td class="studet">{{ record[4] }}</td>
+                        
+                            </tr>
+                            <tr>
+                                <th class="studet">Phone no:</th>
+                                <td  class="studet">{{ record[1] }}</td>
+                                <td>&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+                                <th class="studet">Email:</th>
+                                <td class="studet">{{ record[2] }}</td>
+                            </tr>
+                            {% endif %}
+                        </table>
+                    </div>
                 </div><br><br>
                 <center>
-                <div class="container">
+                <div class="container" style="width: 100%; ">
                     <ul>
-                        <li style="cursor:default;"><a>Reservation</a>
-                        <ul>
-                            <li><a>Book</a></li>
-                            <li><a>Magazine</a></li>
-                            <li><a>Journal</a></li>
-                            <li><a>CD</a></li>
-                        </ul></li>
-                        <li style="cursor:default;"><a>Search</a>
-                        <ul>
-                            <li><a>Book</a></li>
-                            <li><a>Magazine</a></li>
-                            <li><a>Journal</a></li>
-                            <li><a>CD</a></li>
-                        </ul></li>
-                        <li><a style="cursor: pointer;" href="{{ url_for('display', title='Books') }}">Catalogue</a></li>
+                        <li style="cursor:default; "><a href="{{ url_for('reserve1') }}" style="color: white;">Reservation</a>
+                        <li><a style="cursor: pointer; color: white;" href="{{ url_for('display2') }}">Catalogue</a></li>
                         <li><a style="cursor: pointer;">Contact Us</a></li>
+                        <li><a style="cursor: pointer;">Sign Out</a></li>
                     </ul>
                 </div>
                 </center>
-                <div class="container" style="clear: both;">
-                    <br>
-                    <h3>Book Details</h3>
-                    <div class="table-responsive">
-                    <table class="BookDetails">
-                        <tr class="row1">
-                            <th class="heading">Book ID</th>
-                            <th class="heading">Title</th>
-                            <th class="heading">Author</th>
-                            <th class="heading">Genre</th>
-                            <th class="heading">Publisher</th>
-                            <th class="heading">Price</th>
-                            <th class="heading">Issue Date</th>
-                            <th class="heading">Due Date</th>
-                            <th class="heading">Self-Renewal Date</th>
-                            <th class="heading">Fine</th>
-                            <th class="heading">Renew Book</th>
-                            
-                        </tr>
- 
-                        {% for i in rec %}
-                        {% set row = rec[loop.index-1] %}
-                        {% set rw = rec2[loop.index-1] %}
-                        <tr class="row12">
-                            <td class="heading">{{ row[0] }}</td>
-                            <td class="heading">{{ row[1] }}</td>
-                            <td class="heading">{{ row[2] }}</td>
-                            <td class="heading">{{ row[3] }}</td>
-                            <td class="heading">{{ row[4] }}</td>
-                            <td class="heading">{{ row[5] }}</td>
-                            <td class="heading">{{ row[6] }}</td>
-                            <td class="heading">{{ row[7] }}</td>
-                            {% if res_date %}
-                            <td class="heading">{{ res_date }}</td>
-                            {% endif %}
-                            <td class="heading">{{ rw }}</td>
-                            <form method="POST" id="form1" action="{{ url_for('studentdashboard') }}">
-                            <td class="heading"><button>Renew Book</button></td>
-                            </form>
-                        </tr>
-                        {% endfor %}
-                    </table>
+                <br><br><br><br>
+                <div class="radio-container" style="clear: both;">
+                    <label for="book">Book</label>
+                    <input type="radio" name="radio" value="radio1" checked/>
+                    
+                    <label for="cd">CD</label>
+                    <input type="radio" name="radio" value="radio2"/>
+                </div><br>
+                <div id=form1>
+                    <div class="container" style="clear: both;">
+                        <br>
+                        <h3>Book Details</h3>
+                        <div class="table-responsive">
+                            <table class="BookDetails">
+                                <tr class="row1">
+                                    <th class="heading">Book ID</th>
+                                    <th class="heading">Title</th>
+                                    <th class="heading">Author</th>
+                                    <th class="heading">Genre</th>
+                                    <th class="heading">Publisher</th>
+                                    <th class="heading">Price</th>
+                                    <th class="heading">Issue Date</th>
+                                    <th class="heading">Due Date</th>
+                                    <th class="heading">Self-Renewal Date</th>
+                                    <th class="heading">Fine</th>
+                                    <th class="heading">Renew Book</th>
+                                    
+                                </tr>
+        
+                                {% for i in rec %}
+                                {% set row = rec[loop.index-1] %}
+                                {% set rw = rec2[loop.index-1] %}
+                                <tr class="row12">
+                                    <td class="heading">{{ row[0] }}</td>
+                                    <td class="heading">{{ row[1] }}</td>
+                                    <td class="heading">{{ row[2] }}</td>
+                                    <td class="heading">{{ row[3] }}</td>
+                                    <td class="heading">{{ row[4] }}</td>
+                                    <td class="heading">{{ row[5] }}</td>
+                                    <td class="heading">{{ row[6] }}</td>
+                                    <td class="heading">{{ row[7] }}</td>
+                                    {% if res_date %}
+                                    <td class="heading">{{ res_date }}</td>
+                                    {% endif %}
+                                    <td class="heading">{{ rw }}</td>
+                                    <form method="POST" id="form1" action="{{ url_for('studentdashboard') }}">
+                                    <td class="heading"><button>Renew Book</button></td>
+                                    </form>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+    
+                    <div class="container" style="clear: both;">
+                        <br>
+                        <h3>Reserved Book Details</h3>
+                        <div class="table-responsive">
+                            <table class="BookDetails">
+                                <tr class="row1">
+                                    
+                                    <th class="heading">Book ID</th>
+                                    <th class="heading">Reserve Date</th>
+                                    <th class="heading">Cancel Reservation</th>
+                                </tr>
+
+                                {% for j in rec3 %}
+                                <tr class="row12">
+                                    <td class="heading">{{ j[1] }}</td>
+                                    <td class="heading">{{ j[2] }}</td>
+                                    <td class="heading"><button>Cancel Reservation</button></td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
                 </div>
+                <div id=form2>
+                    <div class="container" style="clear: both;">
+                        <br>
+                        <h3>CD Details</h3>
+                        <div class="table-responsive">
+                            <table class="BookDetails">
+                                <tr class="row1">
+                                    <th class="heading">CD ID</th>
+                                    <th class="heading">Title</th>
+                                    <th class="heading">Author</th>
+                                    <th class="heading">Genre</th>
+                                    <th class="heading">Company</th>
+                                    <th class="heading">Price</th>
+                                    <th class="heading">Issue Date</th>
+                                    <th class="heading">Due Date</th>
+                                    <th class="heading">Self-Renewal Date</th>
+                                    <th class="heading">Fine</th>
+                                    <th class="heading">Renew CD</th>
+                                    
+                                </tr>
+        
+                                {% for i in rec4 %}
+                                {% set row = rec4[loop.index-1] %}
+                                {% set rw = rec5[loop.index-1] %}
+                                <tr class="row12">
+                                    <td class="heading">{{ row[0] }}</td>
+                                    <td class="heading">{{ row[1] }}</td>
+                                    <td class="heading">{{ row[2] }}</td>
+                                    <td class="heading">{{ row[3] }}</td>
+                                    <td class="heading">{{ row[4] }}</td>
+                                    <td class="heading">{{ row[5] }}</td>
+                                    <td class="heading">{{ row[6] }}</td>
+                                    <td class="heading">{{ row[7] }}</td>
+                                    {% if res_date %}
+                                    <td class="heading">{{ res_date }}</td>
+                                    {% endif %}
+                                    <td class="heading">{{ rw }}</td>
+                                    <form method="POST" id="form1" action="{{ url_for('studentdashboard') }}">
+                                        <td class="heading"><button>Renew Book</button></td>
+                                    </form>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                    <div class="container" style="clear: both;">
+                        <br>
+                        <h3>Reserved CD Details</h3>
+                        <div class="table-responsive">
+                            <table class="BookDetails">
+                                <tr class="row1">
+                                    
+                                    <th class="heading">CD ID</th>
+                                    <th class="heading">Reserve Date</th>
+                                    <th class="heading">Cancel Reservation</th>
+                                    
+                                </tr>
+
+                                {% for j in rec6 %}
+                                <tr class="row12">
+                                    <td class="heading">{{ j[1] }}</td>
+                                    <td class="heading">{{ j[2] }}</td>
+                                    <td class="heading"><button>Cancel Reservation</button></td>
+                                    
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
                 </div>
-            </div>
+        </div>
         </center>
+        <script>
+
+            $(window).bind("pageshow", function(event) {
+                if (event.originalEvent.persisted) {
+                    window.location.reload();
+                }
+            });            
+
+            var radios = document.getElementsByName("radio");
+            var book = document.getElementById("form1");
+            var cd = document.getElementById("form2");
+            
+            
+            book.style.display = 'block';
+            cd.style.display = 'none';
+            
+            for(var i = 0; i < radios.length; i++) {
+                radios[i].onclick = function() {
+                    var val = this.value;
+                    if(val == 'radio1'){  
+                        book.style.display = 'block';
+                        cd.style.display = 'none';
+                        
+                    }
+                    else if(val == 'radio2'){
+                        book.style.display = 'none';
+                        cd.style.display = 'block';
+                        
+                    }   
+                }
+            }
+            
+        </script>
     </body>
 </html>
