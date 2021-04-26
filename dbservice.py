@@ -11,10 +11,10 @@ class dbservice:
         self.create_table()
     
     def connect_database(self):
-        self.connector = mysql.connect(host='127.0.0.1', user='root', password='mysql27')
+        self.connector = mysql.connect(host='127.0.0.1', user='root', password='vishal')
 
         self.dbcursor = self.connector.cursor()
-        self.dbcursor.execute('USE library')
+        self.dbcursor.execute('USE library_management_sys')
 
     def create_table(self):
         self.dbcursor.execute(''' CREATE TABLE IF NOT EXISTS `Books` (
@@ -98,12 +98,21 @@ class dbservice:
         );''')
 
         self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `User_Reserve`(
-            `User_Id` INT NOT NULL,
+            
             `Username` VARCHAR(25) NOT NULL,
-            `Book_Id` INT NOT NULL,
+            `Book_Id` INT UNIQUE NOT NULL,
             `Reserve_date` DATE NOT NULL,
             FOREIGN KEY(`Username`) REFERENCES USER(`Username`) ON DELETE CASCADE,
             FOREIGN KEY(`Book_Id`) REFERENCES BOOKS(`Book_Id`) ON DELETE CASCADE
+        );''')
+
+        self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `User_Reserve2`(
+            
+            `Username` VARCHAR(25) NOT NULL,
+            `Cd_Id` INT UNIQUE NOT NULL,
+            `Reserve_date` DATE NOT NULL,
+            FOREIGN KEY(`Username`) REFERENCES USER(`Username`) ON DELETE CASCADE,
+            FOREIGN KEY(`Cd_Id`) REFERENCES cd(`C_ID`) ON DELETE CASCADE
         );''')
 
         self.connector.commit()
@@ -166,6 +175,68 @@ class dbservice:
     #     print("fjj")
     #     print(records)
     #     return records
+    
+    def resv_book(self, table1, table2, data):
+        bookid = data["Book_Id"]
+        try:
+            select_query = (f'UPDATE {table1} SET Status=1 WHERE Book_Id=%(bookid)s AND status=2')
+            self.dbcursor.execute(select_query,{'bookid':bookid})
+
+            username = data["username"]
+            date = data["Reserve_date"]
+            select_query2 = (f'INSERT INTO {table2} VALUES(%(username)s, %(bookid)s, %(date)s)')
+            self.dbcursor.execute(select_query2,{'username':username, 'bookid':bookid, 'date':date})
+            
+            self.connector.commit()
+        except Exception as e:
+            print(e)    
+        print("fjj")
+    
+    def resv_cd(self, table1, table2, data):
+        cid = data["Cd_Id"]
+        try:
+            select_query = (f'UPDATE {table1} SET Status=1 WHERE C_ID=%(cid)s AND status=2')
+            self.dbcursor.execute(select_query,{'cid':cid})
+
+            username = data["username"]
+            date = data["Reserve_date"]
+            select_query2 = (f'INSERT INTO {table2} VALUES(%(username)s, %(cid)s, %(date)s)')
+            self.dbcursor.execute(select_query2,{'username':username, 'cid':cid, 'date':date})
+            
+            self.connector.commit()
+        except Exception as e:
+            print(e)    
+        print("fjj")
+        
+
+    def search_book(self, table_name,title):
+        select_query = (f'SELECT * FROM {table_name} WHERE Title=%(title)s AND status=2')
+
+        self.dbcursor.execute(select_query,{'title':title})
+        records = self.dbcursor.fetchone()
+        print("fjj")
+        print(records)
+        if records == None:
+            return 0
+        else:
+            return records
+
+    def fetch_catalogue(self, table_name, category):
+
+        try:
+            print(category)
+
+            select_query = (f'SELECT Id, PName, Price, Stock, Description,Date FROM {table_name} WHERE Category=\'{category}\'')
+            print(select_query)
+            self.dbcursor.execute(select_query)
+            records = self.dbcursor.fetchall()
+        
+            print(records)
+            return records
+        except Exception as e:
+            print(e)
+
+    
 
     def fetch_reserve_date(self, table_name, username):
         select_query = (f'SELECT Reserve_date FROM {table_name} WHERE Username=%(user)s')
@@ -194,6 +265,15 @@ class dbservice:
         print(records)
         return records
     
+    def fetch_cd_records(self, table_name, username):
+        #select_query = (f'SELECT First_Name, Phone, Email FROM {table_name} WHERE Username=%(user)s')
+        select_query = (f'SELECT cd.C_Id,Title,Author,Genre,Company,CD_type,Price,Issue_date,Due_date FROM cd,{table_name} WHERE cd.C_Id=user_issue2.C_Id AND Username=%(user)s') 
+        self.dbcursor.execute(select_query,{'user':username})
+        records = self.dbcursor.fetchall()
+        print("fjj12")
+        print(records)
+        return records
+    
     def fine_calc(self, table_name, username):
         select_query = (f'SELECT Due_date FROM {table_name} WHERE Username=%(user)s')        
         self.dbcursor.execute(select_query,{'user':username})
@@ -208,6 +288,13 @@ class dbservice:
                 lst.append(0)
         print(lst)
         return lst
+    
+    def reserved_book_records(self, table_name, username):
+        select_query = (f'SELECT * FROM {table_name} WHERE Username=%(user)s')        
+        self.dbcursor.execute(select_query,{'user':username})
+        records = self.dbcursor.fetchall()
+        print(records)
+        return records
 
     def signin_admin(self, table_name, input_data):
         #keys = list(input_data.values())
