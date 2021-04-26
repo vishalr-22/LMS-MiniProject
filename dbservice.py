@@ -326,3 +326,12 @@ class dbservice:
         self.dbcursor.execute(count_query)
         no_records = self.dbcursor.fetchone()
         return no_records[0]
+
+    def count_records(self, table, condtn):
+        count_query = (f'SELECT COUNT(User_Id) FROM {table} where User_Id = {condtn}')
+        try:
+            self.dbcursor.execute(count_query)
+            result = self.dbcursor.fetchone()
+            return result
+        except Exception as ex:
+            print(ex)

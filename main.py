@@ -199,13 +199,20 @@ def issue_book():
         due_date = datetime.now() + timedelta(days = 10)
         user = db.fetch_column_data(table, ['User_Id', 'Username'], condition_name = 'Username', condition_value = username)
         book = db.fetch_column_data(table2, ['Status'], condition_name = 'Book_Id', condition_value = bookid)
-        if book[0][0] == 1:
+        nob = db.count_records('User_issue', user[0][0])
+        print(nob[0])
+        if book[0][0] == 2 and nob[0] < 4:
             data = {'User_Id': user[0][0], 'Username': user[0][1], 'Book_Id': bookid, 'Issue_date': issue_date, 'Due_date': due_date}
             db.add_record('User_Issue', data)
             db.update_record(table2, Id = bookid, updated_data = {'Status': 0}, opt = 1)
             return render_template('issue.html', text = 'Book issued successfully...')
         else:
-            return render_template('issue.html', text = 'Book is already issued to someone !')
+            if book[0][0] == 0:
+                return render_template('issue.html', text = 'Book is already issued to someone !')
+            elif book[0][0] == 1:
+                return render_template('issue.html', text = 'Book is reserved by someone !')
+            elif nob[0] >= 4:
+                return render_template('issue.html', text = 'User already has four books issued !')
     return render_template('issue.html')
 
 @app.route('/issue_cd', methods=['POST', 'GET'])
@@ -219,13 +226,19 @@ def issue_cd():
         due_date = datetime.now() + timedelta(days = 10)
         user = db.fetch_column_data(table, ['User_Id', 'Username'], condition_name = 'Username', condition_value = username)
         cd = db.fetch_column_data(table2, ['Status'], condition_name = 'C_ID', condition_value = cdid)
-        if cd[0][0] == 1:
+        noc = db.count_records('User_issue2', user[0][0])
+        if cd[0][0] == 1 and noc[0] < 2:
             data = {'User_Id': user[0][0], 'Username': user[0][1], 'C_ID': cdid, 'Issue_date': issue_date, 'Due_date': due_date}
             db.add_record('User_Issue2', data)
             db.update_record(table2, Id = cdid, updated_data = {'Status': 0}, opt = 2)
             return render_template('issue.html', text = 'CD issued successfully...')
         else:
-            return render_template('issue.html', text = 'CD is already issued to someone !')
+            if cd[0][0] == 0:
+                return render_template('issue.html', text = 'CD is already issued to someone !')
+            elif cd[0][0] == 1:
+                return render_template('issue.html', text = 'CD is reserved by someone !')
+            elif noc[0] >= 1:
+                return render_template('issue.html', text = 'User already has one CD issued !')
     return render_template('issue.html')
 
 @app.route('/return_book', methods=['POST', 'GET'])
@@ -236,7 +249,7 @@ def return_book():
         book = db.fetch_column_data(table, ['Status'], condition_name = 'Book_Id', condition_value = bookid)
         if book[0][0] == 0:
             db.delete_record('User_Issue', bookid, opt = 1)
-            db.update_record(table, Id = bookid, updated_data = {'Status': 1}, opt = 1)
+            db.update_record(table, Id = bookid, updated_data = {'Status': 2}, opt = 1)
             return render_template('return.html', text = 'Book returned successfully...')
         else:
             return render_template('return.html', text = 'Book is not issued to anyone !')
@@ -250,7 +263,7 @@ def return_cd():
         cd = db.fetch_column_data(table, ['Status'], condition_name = 'C_ID', condition_value = cdid)
         if cd[0][0] == 0:
             db.delete_record('User_Issue2', cdid, opt = 2)
-            db.update_record(table, Id = cdid, updated_data = {'Status': 1}, opt = 2)
+            db.update_record(table, Id = cdid, updated_data = {'Status': 2}, opt = 2)
             return render_template('return.html', text = 'CD returned successfully...')
         else:
             return render_template('return.html', text = 'CD is not issued to anyone !')
