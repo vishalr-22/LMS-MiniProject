@@ -144,14 +144,11 @@ class dbservice:
 
     
     def signin_user(self, table_name, input_data):
-        #keys = list(input_data.values())
         paswd = input_data["Password"]
         user = input_data["Username"]
         print(paswd)
         #Preparing Query
         pwd = (f"SELECT Username FROM {table_name} WHERE Password = %(paswd)s")
-        #if pwd != NULL:
-        # rec = (f"SELECT First_Name, Phone, Email FROM {table_name} WHERE Username = %(user)s")
         try:
             self.dbcursor.execute(pwd,{'paswd':paswd})
             records = self.dbcursor.fetchone()
@@ -160,21 +157,9 @@ class dbservice:
                 return 0
             else:
                 return 1
-            #self.connector.commit()
         except Exception as e:
             print(e)
         return 0
-    
-    #mypart
-
-    # def fetch_issued_books(self, table_name, username):
-    #     select_query = (f'SELECT Reserve_date FROM {table_name} WHERE Username=%(user)s')
-
-    #     self.dbcursor.execute(select_query,{'user':username})
-    #     records = self.dbcursor.fetchone()
-    #     print("fjj")
-    #     print(records)
-    #     return records
     
     def resv_book(self, table1, table2, data):
         bookid = data["Book_Id"]
@@ -190,7 +175,6 @@ class dbservice:
             self.connector.commit()
         except Exception as e:
             print(e)    
-        print("fjj")
     
     def resv_cd(self, table1, table2, data):
         cid = data["Cd_Id"]
@@ -206,16 +190,16 @@ class dbservice:
             self.connector.commit()
         except Exception as e:
             print(e)    
-        print("fjj")
         
 
     def search_book(self, table_name,title):
         select_query = (f'SELECT * FROM {table_name} WHERE Title=%(title)s AND status=2')
 
-        self.dbcursor.execute(select_query,{'title':title})
-        records = self.dbcursor.fetchone()
-        print("fjj")
-        print(records)
+        try:
+            self.dbcursor.execute(select_query,{'title':title})
+            records = self.dbcursor.fetchone()
+        except Exception as e:
+            print(e)
         if records == None:
             return 0
         else:
@@ -224,14 +208,10 @@ class dbservice:
     def fetch_catalogue(self, table_name, category):
 
         try:
-            print(category)
-
             select_query = (f'SELECT Id, PName, Price, Stock, Description,Date FROM {table_name} WHERE Category=\'{category}\'')
             print(select_query)
             self.dbcursor.execute(select_query)
             records = self.dbcursor.fetchall()
-        
-            print(records)
             return records
         except Exception as e:
             print(e)
@@ -243,67 +223,65 @@ class dbservice:
 
         self.dbcursor.execute(select_query,{'user':username})
         records = self.dbcursor.fetchone()
-        print("fjj")
-        print(records)
         return records
 
     def fetch_user_records(self, table_name, username):
         select_query = (f'SELECT First_Name, Phone, Email, Last_name, Username FROM {table_name} WHERE Username=%(user)s')
 
-        self.dbcursor.execute(select_query,{'user':username})
-        records = self.dbcursor.fetchone()
-        print("fjj")
-        print(records)
+        try:
+            self.dbcursor.execute(select_query,{'user':username})
+            records = self.dbcursor.fetchone()
+        except Exception as e:
+            print(e)
         return records
     
     def fetch_books_records(self, table_name, username):
-        #select_query = (f'SELECT First_Name, Phone, Email FROM {table_name} WHERE Username=%(user)s')
         select_query = (f'SELECT Books.Book_Id,Title,Author,Genre,Publisher,Price,Issue_date,Due_date FROM books,{table_name} WHERE Books.Book_Id=user_issue.Book_Id AND Username=%(user)s') 
-        self.dbcursor.execute(select_query,{'user':username})
-        records = self.dbcursor.fetchall()
-        print("fjj1")
-        print(records)
+        try:
+            self.dbcursor.execute(select_query,{'user':username})
+            records = self.dbcursor.fetchall()
+        except Exception as e:
+            print(e)
         return records
     
     def fetch_cd_records(self, table_name, username):
-        #select_query = (f'SELECT First_Name, Phone, Email FROM {table_name} WHERE Username=%(user)s')
         select_query = (f'SELECT cd.C_Id,Title,Author,Genre,Company,CD_type,Price,Issue_date,Due_date FROM cd,{table_name} WHERE cd.C_Id=user_issue2.C_Id AND Username=%(user)s') 
-        self.dbcursor.execute(select_query,{'user':username})
-        records = self.dbcursor.fetchall()
-        print("fjj12")
-        print(records)
+        try:
+            self.dbcursor.execute(select_query,{'user':username})
+            records = self.dbcursor.fetchall()
+        except Exception as e:
+            print(e)
         return records
     
     def fine_calc(self, table_name, username):
         select_query = (f'SELECT Due_date FROM {table_name} WHERE Username=%(user)s')        
-        self.dbcursor.execute(select_query,{'user':username})
-        records = self.dbcursor.fetchall()
+        try:
+            self.dbcursor.execute(select_query,{'user':username})
+            records = self.dbcursor.fetchall()
+        except Exception as e:
+            print(e)
+        
         lst = []
-        print(records)
-        print(datetime.now())
         for i in records:
             if i[0] < date.today():
                 lst.append(5*(i[0]-date.today()).days)
             else:
                 lst.append(0)
-        print(lst)
         return lst
     
     def reserved_book_records(self, table_name, username):
         select_query = (f'SELECT * FROM {table_name} WHERE Username=%(user)s')        
-        self.dbcursor.execute(select_query,{'user':username})
-        records = self.dbcursor.fetchall()
-        print(records)
+        try:
+            self.dbcursor.execute(select_query,{'user':username})
+            records = self.dbcursor.fetchall()
+        except Exception as e:
+            print(e)
         return records
 
     def signin_admin(self, table_name, input_data):
-        #keys = list(input_data.values())
         paswd = input_data["Password"]
-        print(paswd)
-        #Preparing Query
         pwd = (f"SELECT Username FROM {table_name} WHERE Password = %(paswd)s")
-        #if pwd != NULL:
-
+        
         try:
             self.dbcursor.execute(pwd,{'paswd':paswd})
             records = self.dbcursor.fetchone()
@@ -311,7 +289,6 @@ class dbservice:
                 return 0
             else:
                 return 1
-            #self.connector.commit()
         except Exception as e:
             print(e)
         return 0
@@ -331,8 +308,7 @@ class dbservice:
                 table_data += f'{x})'
 
         add_query = (f'INSERT INTO {table_name} ' + table_data + table_values)
-        print(add_query)
-
+        
         #Execute Query
         try:
             self.dbcursor.execute(add_query, input_data)
@@ -343,24 +319,24 @@ class dbservice:
     def fetch_records(self, table_name):
         select_query = (f'SELECT * FROM {table_name}')
 
-        self.dbcursor.execute(select_query)
-        records = self.dbcursor.fetchall()
+        try:
+            self.dbcursor.execute(select_query)
+            records = self.dbcursor.fetchall()
+        except Exception as e:
+            print(e)
         return records
 
     def delete_record(self, table_name, title, opt = 0):
         if opt == 0:
             if table_name == 'Journal':
                 delete_query = (f"DELETE FROM {table_name} WHERE Topic = %(title)s")
-                print(delete_query)
             else:
                 delete_query = (f"DELETE FROM {table_name} WHERE Title = %(title)s")
-                print(delete_query)
         else:
             if opt == 1:
                 delete_query = (f"DELETE FROM {table_name} WHERE Book_Id = %(title)s")
             elif opt == 2:
                 delete_query = (f"DELETE FROM {table_name} WHERE C_Id = %(title)s")
-            print(delete_query)
         try:
             self.dbcursor.execute(delete_query, {'title':title})
             self.connector.commit()
@@ -381,7 +357,6 @@ class dbservice:
         
         updated_data['Id'] = Id
         update_query = (f'UPDATE {table_name} SET '+ set_values)
-        print(update_query)
         try:
             self.dbcursor.execute(update_query, updated_data)
             self.connector.commit()
@@ -399,19 +374,26 @@ class dbservice:
         
         if condition_name != None and condition_value != None:
             fetch_query += f' WHERE {condition_name} = %(condition_value)s'
-            print(fetch_query)
-            self.dbcursor.execute(fetch_query, {'condition_value': condition_value})
+            try:
+                self.dbcursor.execute(fetch_query, {'condition_value': condition_value})
+            except Exception as e:
+                print(e)
         else:
-            self.dbcursor.execute(fetch_query)
+            try:
+                self.dbcursor.execute(fetch_query)
+            except Exception as e:
+                print(e)
         columns_data = self.dbcursor.fetchall()
 
         return columns_data
 
     def get_last_insert_id(self):
         count_query = (f'SELECT last_insert_id()')
-        
-        self.dbcursor.execute(count_query)
-        no_records = self.dbcursor.fetchone()
+        try:
+            self.dbcursor.execute(count_query)
+            no_records = self.dbcursor.fetchone()
+        except Exception as e:
+            print(e)
         return no_records[0]
 
     def count_records(self, table, condtn):

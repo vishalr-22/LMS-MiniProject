@@ -51,7 +51,7 @@
     </head>
     <body>
         <nav class="topnav">
-            <a class = "active" href="#" onclick="javascript:window.history.back(-1);return false;">Home</a>
+            <a class = "active" href="{{ url_for('studentdashboard') }}" >Home</a>
         </nav>
         <div class="radio-container">
             <label for="book">Book</label>
@@ -149,18 +149,13 @@
                     <div >
                         <form method="POST" id="form1" action="{{ url_for('search_book') }}">
                             <h2 style="color: white;">Search book</h2>
-                            <!-- <div class="mb-3">
-                                <label for="username">Username</label>
-                                <input type="text" class="form-control" name="username" placeholder="Enter username">
-                                <small id="emailHelp" class="form-text text-muted"></small>
-                            </div> -->
                             <div class="mb-3">
                                 <label for="bookname">Book Name</label>
                                 <input type="text" class="form-control" name="bookname" placeholder="Enter Book Name">
                                 <small id="emailHelp" class="form-text text-muted"></small>
                             </div>
                             
-                            <button type="submit" class="btn btn-primary" onclick="myFunction()">search</button>
+                            <button type="submit" class="btn btn-primary">search</button>
                             
                         </form>
                     </div>
@@ -264,22 +259,12 @@
             var acd = document.getElementById("div2");
             var sbook = document.getElementById("div3");
             var scd = document.getElementById("div4");
-            // var bookr = document.getElementById("div5");
-            // var cdr = document.getElementById("div6");
             
             abook.style.display = 'block';
             acd.style.display = 'none';
             sbook.style.display = 'block';
             scd.style.display = 'none';
-            // bookr.style.display = 'none';
-            // cdr.style.display = 'none';
             
-
-            
-            function myFunction(){
-                bookr.style.display = 'block';   
-            }
-
             for(var i = 0; i < radios.length; i++) {
                 radios[i].onclick = function() {
                     var val = this.value;
@@ -288,17 +273,12 @@
                         acd.style.display = 'none';
                         sbook.style.display = 'block';
                         scd.style.display = 'none';
-                        // bookr.style.display = 'block';
-                        // cdr.style.display = 'none';
                     }
                     else if(val == 'radio2'){
                         abook.style.display = 'none';
                         acd.style.display = 'block';
                         scd.style.display = 'block';
                         sbook.style.display = 'none';
-                        // bookr.style.display = 'none';
-                        // cdr.style.display = 'block';
-                        
                     }   
                 }
             }

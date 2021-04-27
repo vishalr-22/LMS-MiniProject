@@ -14,11 +14,9 @@ def check_update_data(updated_data):
             removed_value = updated_data.pop(key,'Key Not Found')
     return updated_data
 
-
 @app.route('/')
 def homepage():
     return render_template('homepage.html')
-#mypart
 
 @app.route('/signup',methods=['POST','GET'])
 def signup():
@@ -35,7 +33,6 @@ def signup():
         return render_template('signin.html',text='Signup Successfull!')
     return render_template('signup.html')
 
-
 @app.route('/signin_user',methods=['POST','GET'])
 def signin_user():
     if request.method=='POST':
@@ -47,7 +44,6 @@ def signin_user():
         if val == 1:
             record = db.fetch_user_records(table,username)
             rec = db.fetch_books_records('user_issue',username)
-            # res_date = db.fetch_issued_books('')
             fine = db.fine_calc('user_issue', username)
             res_book = db.reserved_book_records('user_reserve',username)
             rec2 = db.fetch_cd_records('user_issue2',username)
@@ -71,7 +67,6 @@ def signin_admin():
         else:
             return render_template('signin.html',text='Invalid Credentials!')
     return render_template('signin.html')
-#mypart
 
 @app.route('/studentdashboard',methods=['POST','GET'])
 def studentdashboard():
@@ -161,9 +156,7 @@ def resv_cd():
 def search_book():
     if request.method=='POST':
         table = 'books'
-        # username = request.form.get('username')
         bookname = request.form.get('bookname')
-        data = {'Title':bookname }
         records = db.search_book(table, bookname)
         if records == 0:
             return render_template('reserve.html',text2='Book Not Available')
@@ -176,14 +169,12 @@ def search_cd():
     if request.method=='POST':
         table = 'cd'
         cdname = request.form.get('cdname')
-        data = {'Title':cdname }
         records = db.search_book(table, cdname)
         if records == 0:
             return render_template('reserve.html',text2='Book Not Available')
         else:
             return render_template('reserve.html',rec2=records)
     return render_template('reserve.html')
-
 
 @app.route('/adminpage',methods=['POST','GET'])
 def adminpage():
