@@ -118,7 +118,7 @@
     <body>
         <center>
             <div class="container" id="full" style="background-color: rgba(193, 160, 245, 0.849);">
-                <h1>Welcome Name</h1><br>
+                <h1>Welcome {{ record[0] }}</h1><br>
                 <h3>Student Details</h3>
                 <div>
                     <div class="table-responsive">
@@ -199,7 +199,7 @@
                                     <td class="heading">{{ res_date }}</td>
                                     {% endif %}
                                     <td class="heading">{{ rw }}</td>
-                                    <form method="POST" id="form1" action="{{ url_for('studentdashboard') }}">
+                                    <form method="POST" id="form1" action="">
                                     <td class="heading"><button>Renew Book</button></td>
                                     </form>
                                 </tr>
@@ -217,14 +217,14 @@
                                     
                                     <th class="heading">Book ID</th>
                                     <th class="heading">Reserve Date</th>
-                                    <th class="heading">Cancel Reservation</th>
+                                    <!-- <th class="heading">Cancel Reservation</th> -->
                                 </tr>
 
                                 {% for j in rec3 %}
                                 <tr class="row12">
                                     <td class="heading">{{ j[1] }}</td>
                                     <td class="heading">{{ j[2] }}</td>
-                                    <td class="heading"><button>Cancel Reservation</button></td>
+                                    <!-- <td class="heading"><button>Cancel Reservation</button></td> -->
                                 </tr>
                                 {% endfor %}
                             </table>
@@ -248,7 +248,7 @@
                                     <th class="heading">Due Date</th>
                                     <th class="heading">Self-Renewal Date</th>
                                     <th class="heading">Fine</th>
-                                    <th class="heading">Renew CD</th>
+                                    <!-- <th class="heading">Renew CD</th> -->
                                     
                                 </tr>
         
@@ -268,9 +268,9 @@
                                     <td class="heading">{{ res_date }}</td>
                                     {% endif %}
                                     <td class="heading">{{ rw }}</td>
-                                    <form method="POST" id="form1" action="{{ url_for('studentdashboard') }}">
+                                    <!-- <form method="POST" id="form1" action="">
                                         <td class="heading"><button>Renew Book</button></td>
-                                    </form>
+                                    </form> -->
                                 </tr>
                                 {% endfor %}
                             </table>
@@ -285,7 +285,7 @@
                                     
                                     <th class="heading">CD ID</th>
                                     <th class="heading">Reserve Date</th>
-                                    <th class="heading">Cancel Reservation</th>
+                                    <!-- <th class="heading">Cancel Reservation</th> -->
                                     
                                 </tr>
 
@@ -293,7 +293,7 @@
                                 <tr class="row12">
                                     <td class="heading">{{ j[1] }}</td>
                                     <td class="heading">{{ j[2] }}</td>
-                                    <td class="heading"><button>Cancel Reservation</button></td>
+                                    <!-- <td class="heading"><button>Cancel Reservation</button></td> -->
                                     
                                 </tr>
                                 {% endfor %}

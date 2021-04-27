@@ -14,11 +14,9 @@ def check_update_data(updated_data):
             removed_value = updated_data.pop(key,'Key Not Found')
     return updated_data
 
-
 @app.route('/')
 def homepage():
     return render_template('homepage.html')
-#mypart
 
 @app.route('/signup',methods=['POST','GET'])
 def signup():
@@ -35,7 +33,6 @@ def signup():
         return render_template('signin.html',text='Signup Successfull!')
     return render_template('signup.html')
 
-
 @app.route('/signin_user',methods=['POST','GET'])
 def signin_user():
     if request.method=='POST':
@@ -47,7 +44,6 @@ def signin_user():
         if val == 1:
             record = db.fetch_user_records(table,username)
             rec = db.fetch_books_records('user_issue',username)
-            # res_date = db.fetch_issued_books('')
             fine = db.fine_calc('user_issue', username)
             res_book = db.reserved_book_records('user_reserve',username)
             rec2 = db.fetch_cd_records('user_issue2',username)
@@ -71,26 +67,19 @@ def signin_admin():
         else:
             return render_template('signin.html',text='Invalid Credentials!')
     return render_template('signin.html')
-#mypart
 
 @app.route('/studentdashboard',methods=['POST','GET'])
 def studentdashboard():
-    # if request.method=='POST':
-        
-        # return render_template('studentdashboard.html')
     return render_template('studentdashboard.html')
 
 @app.route('/display2', methods = ['POST', 'GET'])
 def display2():
-    # if request.method == 'POST':
     cat1 = db.fetch_records('books')
     cat2 = db.fetch_records('Cd')
     cat3 = db.fetch_records('magazine')
     cat4 = db.fetch_records('journal')
 
     return render_template('display.html', record1=cat1, record2=cat2, record3=cat3, record4=cat4)
-    # return render_template('display.html')
-
 
 @app.route('/reserve1',methods=['POST','GET'])
 def reserve1():
@@ -142,9 +131,7 @@ def resv_cd():
 def search_book():
     if request.method=='POST':
         table = 'books'
-        # username = request.form.get('username')
         bookname = request.form.get('bookname')
-        data = {'Title':bookname }
         records = db.search_book(table, bookname)
         if records == 0:
             return render_template('reserve.html',text2='Book Not Available')
@@ -156,27 +143,19 @@ def search_book():
 def search_cd():
     if request.method=='POST':
         table = 'cd'
-        # username = request.form.get('username')
         cdname = request.form.get('cdname')
-        data = {'Title':cdname }
         records = db.search_book(table, cdname)
-        # if val == 1:
-        #     return render_template('adminpage.html')
-        # else:
         if records == 0:
             return render_template('reserve.html',text2='Book Not Available')
         else:
             return render_template('reserve.html',rec2=records)
     return render_template('reserve.html')
 
-
 @app.route('/adminpage',methods=['POST','GET'])
 def adminpage():
     if request.method=='POST':
         return render_template('adminpage.html')
     return render_template('adminpage.html')
-
-
 
 @app.route('/add_book',methods=['POST','GET'])
 def add_book():
@@ -220,7 +199,6 @@ def add_magz():
         db.add_record(table, data)
         return render_template('add_option.html', text='New Magazine added!')
     return render_template('add_option.html')
-
 
 @app.route('/add_journal',methods=['POST','GET'])
 def add_journal():
