@@ -116,6 +116,18 @@
         </style>
     </head>
     <body>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        <h2 style="text-align: center;">{{ message }}</h2>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         <center>
             <div class="container" id="full" style="background-color: rgba(193, 160, 245, 0.849);">
                 <h1>Welcome Name</h1><br>
@@ -172,9 +184,6 @@
                                     <th class="heading">Book ID</th>
                                     <th class="heading">Title</th>
                                     <th class="heading">Author</th>
-                                    <th class="heading">Genre</th>
-                                    <th class="heading">Publisher</th>
-                                    <th class="heading">Price</th>
                                     <th class="heading">Issue Date</th>
                                     <th class="heading">Due Date</th>
                                     <th class="heading">Self-Renewal Date</th>
@@ -190,16 +199,13 @@
                                     <td class="heading">{{ row[0] }}</td>
                                     <td class="heading">{{ row[1] }}</td>
                                     <td class="heading">{{ row[2] }}</td>
-                                    <td class="heading">{{ row[3] }}</td>
-                                    <td class="heading">{{ row[4] }}</td>
-                                    <td class="heading">{{ row[5] }}</td>
                                     <td class="heading">{{ row[6] }}</td>
                                     <td class="heading">{{ row[7] }}</td>
                                     {% if res_date %}
                                     <td class="heading">{{ res_date }}</td>
                                     {% endif %}
                                     <td class="heading">{{ rw }}</td>
-                                    <form method="POST" id="form1" action="{{ url_for('studentdashboard') }}">
+                                    <form method="POST" id="form1" action="{{ url_for('renew', id = row[0]) }}">
                                     <td class="heading"><button>Renew Book</button></td>
                                     </form>
                                 </tr>
@@ -241,9 +247,6 @@
                                     <th class="heading">CD ID</th>
                                     <th class="heading">Title</th>
                                     <th class="heading">Author</th>
-                                    <th class="heading">Genre</th>
-                                    <th class="heading">Company</th>
-                                    <th class="heading">Price</th>
                                     <th class="heading">Issue Date</th>
                                     <th class="heading">Due Date</th>
                                     <th class="heading">Self-Renewal Date</th>
@@ -259,9 +262,6 @@
                                     <td class="heading">{{ row[0] }}</td>
                                     <td class="heading">{{ row[1] }}</td>
                                     <td class="heading">{{ row[2] }}</td>
-                                    <td class="heading">{{ row[3] }}</td>
-                                    <td class="heading">{{ row[4] }}</td>
-                                    <td class="heading">{{ row[5] }}</td>
                                     <td class="heading">{{ row[6] }}</td>
                                     <td class="heading">{{ row[7] }}</td>
                                     {% if res_date %}
