@@ -8,78 +8,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <style>
-             .topnav {
-                overflow: hidden;
-                background-color: #333;
-            }
-
-            .topnav a {
-                float: left;
-                color: #f2f2f2;
-                border-right: 1px solid #f2f2f2;
-                border-left: 1px solid #f2f2f2;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-                font-size: 17px;
-            }
-
-            .topnav a:hover {
-                background-color: #ddd;
-                color: black;
-            }
-
-            .topnav a.active {
-                background-color: #4CAF50;
-                color: white;
-            }
-
-            .col-md-4 col-md-offset-4{
-                text-align:center;
-                margin: auto;
-                width: 50%;
-            }
-
-            form{
-                border:4px solid black;
-                padding:10px 10px 10px 10px;
-                background-color: black;
-            }
-
-            form label{
-                text-align:left;
-                color:white;
-            }
-
-            body{
-                background-color:whitesmoke;
-            }
-
-            .col-md-4 col-md-offset-4{
-                    text-align: center;
-            }
-
-            .radio-container{
-                border-color: black;
-                font-size: 20px;
-                border: 4px solid black;
-                background-color: rgb(241, 185, 133);
-                text-align: center;
-                margin: auto;
-                width: 60%;
-            }
-
-            .radio-container label{
-                margin: 2%;
-                margin-left: 5%;
-            }
-
-            h2{
-                color:rgb(255, 246, 246);
-                text-align: center;
-            }
-        </style>        
+        <link rel="stylesheet" href="../static/css/admin_func.css">     
     </head>
     <body>
         <nav class="topnav">
@@ -102,8 +31,8 @@
 
         <center>
 
-        <div class="col-md-4 col-md-offset-4">
-            <form id="form1" method="POST" action="{{ url_for('add_book') }}">
+        <div id="form1" class="col-md-4 col-md-offset-4">
+            <form method="POST" action="{{ url_for('add_book') }}">
                 <h2>Add new Book</h2> 
                 <div class="mb-3">
                 <label for="exampleInputEmail1">Book title</label>
@@ -121,8 +50,14 @@
                     <small id="emailHelp" class="form-text text-muted"></small>
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputEmail1">Genre</label>
-                    <input type="varchar" class="form-control" id="exampleInputEmail1" name="genre" placeholder="Enter Genre"><br>
+                    <label for="exampleInputEmail1">Genre:</label>
+                    <br>
+                    <select class='select-css' name="genre" required>
+                      <option class="option-css" value=""> Select Genre of Book: </option>
+                      {% for genre in genres %}
+                        <option class="option-css" value="{{ genre[1] }}"> {{ genre[1] }} </option>
+                      {% endfor %}
+                    </select>
                     <small id="emailHelp" class="form-text text-muted"></small>
                 </div>
                 <div class="mb-3">
@@ -133,10 +68,16 @@
                 
             <button type="submit" class="btn btn-primary">Add</button>
             </form>
+            {% if text %}
+                <h3 style="text-align: center; color: green; background-color: blanchedalmond;">{{ text }}</h3>
+                <br>
+                <a href="{{url_for('display', title = 'Books')}}">See the updated catalogue....</a>
+                <br><br><br><br>
+            {% endif %}
          </div>
 
-         <div class="col-md-4 col-md-offset-4">
-            <form id="form2" method="POST" action="{{ url_for('add_cd') }}">
+         <div id="form2" class="col-md-4 col-md-offset-4">
+            <form method="POST" action="{{ url_for('add_cd') }}">
                 <h2>Add new CD</h2>
                 <div class="mb-3">
                 <label for="exampleInputEmail1">CD title</label>
@@ -149,8 +90,14 @@
                     <small id="emailHelp" class="form-text text-muted"></small>
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputEmail1">Genre</label>
-                    <input type="varchar" class="form-control" id="exampleInputEmail1" name="genre" placeholder="Enter Genre"><br>
+                    <label for="exampleInputEmail1">Genre:</label>
+                    <br>
+                    <select class='select-css' name="genre" required>
+                      <option class="option-css" value=""> Select Genre of Book: </option>
+                      {% for genre in genres %}
+                        <option class="option-css" value="{{ genre[1] }}"> {{ genre[1] }} </option>
+                      {% endfor %}
+                    </select>
                     <small id="emailHelp" class="form-text text-muted"></small>
                 </div>
                 <div class="mb-3">
@@ -170,10 +117,16 @@
                 </div>               
             <button type="submit" class="btn btn-primary">Add</button>
             </form>
+            {% if text %}
+                <h3 style="text-align: center; color: green; background-color: blanchedalmond;">{{ text }}</h3>
+                <br>
+                <a href="{{url_for('display', title = 'CD')}}">See the updated catalogue....</a>
+                <br><br><br>
+            {% endif %}
          </div>
 
-         <div class="col-md-4 col-md-offset-4">
-            <form id="form3" method="POST" action="{{ url_for('add_magz') }}">
+         <div id="form3" class="col-md-4 col-md-offset-4">
+            <form method="POST" action="{{ url_for('add_magz') }}">
                 <h2>Add new Magazine</h2>
                 <div class="mb-3">
                 <label for="exampleInputEmail1">Magazine title</label>
@@ -202,10 +155,16 @@
                 </div>  
             <button type="submit" class="btn btn-primary">Add</button>
             </form>
+            {% if text %}
+                <h3 style="text-align: center; color: green; background-color: blanchedalmond;">{{ text }}</h3>
+                <br>
+                <a href="{{url_for('display', title = 'Magazine')}}">See the updated catalogue....</a>
+                <br><br><br>
+            {% endif %}
          </div>
 
-         <div class="col-md-4 col-md-offset-4">
-            <form id="form4" method="POST" action="{{ url_for('add_journal') }}">
+         <div id="form4" class="col-md-4 col-md-offset-4">
+            <form method="POST" action="{{ url_for('add_journal') }}">
                 <h2>Add new Journal</h2>
                 <div class="mb-3">
                 <label for="exampleInputEmail1">Topic</label>
@@ -219,6 +178,12 @@
                 </div>
             <button type="submit" class="btn btn-primary">Add</button>
             </form>
+            {% if text %}
+                <h3 style="text-align: center; color: green; background-color: blanchedalmond;">{{ text }}</h3>
+                <br>
+                <a href="{{url_for('display', title = 'Journal')}}">See the updated catalogue....</a>
+                <br><br>
+            {% endif %}
          </div>
         </center>
 

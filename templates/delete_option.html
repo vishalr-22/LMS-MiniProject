@@ -7,78 +7,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <style>
-        .topnav {
-            overflow: hidden;
-            background-color: #333;
-        }
-
-        .topnav a {
-            float: left;
-            color: #f2f2f2;
-            border-right: 1px solid #f2f2f2;
-            border-left: 1px solid #f2f2f2;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            font-size: 17px;
-        }
-
-        .topnav a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        .topnav a.active {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .col-md-4 col-md-offset-4{
-            text-align:center;
-            margin: auto;
-            width: 50%;
-        }
-
-        form{
-            border:4px solid black;
-            padding:10px 10px 10px 10px;
-            background-color: black;
-        }
-
-        form label{
-            text-align:left;
-            color:white;
-        }
-
-        body{
-            background-color:whitesmoke;
-        }
-
-        .col-md-4 col-md-offset-4{
-                text-align: center;
-        }
-
-        .radio-container{
-            border-color: black;
-            font-size: 20px;
-            border: 4px solid black;
-            background-color: rgb(241, 185, 133);
-            text-align: center;
-            margin: auto;
-            width: 60%;
-        }
-
-        .radio-container label{
-            margin: 2%;
-            margin-left: 5%;
-        }
-
-        h2{
-            color:rgb(255, 246, 246);
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="../static/css/admin_func.css"> 
 </head>
 <body>
     <nav class="topnav">
@@ -99,52 +28,72 @@
     </div><br>
 
     <center>
-        <div class="col-md-4 col-md-offset-4">
-            <form id="form1" method="POST" action="{{ url_for('delete_book') }}">
+        <div id="form1" class="col-md-4 col-md-offset-4">
+            <form method="POST" action="{{ url_for('delete_book') }}">
                 <h2>Delete a Book</h2>
                 <div class="mb-3">
-                    <label for="exampleInputEmail1">Book title</label>
-                    <input type="name" class="form-control" id="exampleInputName1" name="title" placeholder="Enter book title">
+                    <label for="exampleInputEmail1">Book Id</label>
+                    <input type="integer" class="form-control" id="exampleInputName1" name="id" placeholder="Enter book Id">
                     <small id="emailHelp" class="form-text text-muted"></small>
                 </div>
                 <button type="submit" class="btn btn-primary">Delete</button>
             </form>
+            {% if text %}
+                <h3 style="text-align: center; color: green; background-color: blanchedalmond;">{{ text }}</h3>
+                <br>
+                <a href="{{url_for('display', title = 'Books')}}">See the updated catalogue....</a>
+            {% endif %}
          </div>
 
-         <div class="col-md-4 col-md-offset-4">
-            <form id="form2" method="POST" action="{{ url_for('delete_cd') }}">
+         <div id="form2" class="col-md-4 col-md-offset-4">
+            <form method="POST" action="{{ url_for('delete_cd') }}">
                 <h2>Delete a CD</h2>
                 <div class="mb-3">
-                    <label for="exampleInputEmail1">CD title</label>
-                    <input type="name" class="form-control" id="exampleInputName1" name="title" placeholder="Enter CD title">
+                    <label for="exampleInputEmail1">CD Id</label>
+                    <input type="integer" class="form-control" id="exampleInputName1" name="id" placeholder="Enter CD Id">
                     <small id="emailHelp" class="form-text text-muted"></small>
                 </div>
                 <button type="submit" class="btn btn-primary">Delete</button>
             </form>
+            {% if text %}
+                <h3 style="text-align: center; color: green; background-color: blanchedalmond;">{{ text }}</h3>
+                <br>
+                <a href="{{url_for('display', title = 'CD')}}">See the updated catalogue....</a>
+            {% endif %}
          </div>
 
-         <div class="col-md-4 col-md-offset-4">
-            <form id="form3" method="POST" action="{{ url_for('delete_magz') }}">
+         <div id="form3" class="col-md-4 col-md-offset-4">
+            <form method="POST" action="{{ url_for('delete_magz') }}">
                 <h2>Delete a Magazine</h2>
                 <div class="mb-3">
-                    <label for="exampleInputEmail1">Magazine title</label>
-                    <input type="name" class="form-control" id="exampleInputName1" name="title" placeholder="Enter Magazine title">
+                    <label for="exampleInputEmail1">Magazine Id</label>
+                    <input type="integer" class="form-control" id="exampleInputName1" name="id" placeholder="Enter Magazine Id">
                     <small id="emailHelp" class="form-text text-muted"></small>
                 </div>
                 <button type="submit" class="btn btn-primary">Delete</button>
             </form>
+            {% if text %}
+                <h3 style="text-align: center; color: green; background-color: blanchedalmond;">{{ text }}</h3>
+                <br>
+                <a href="{{url_for('display', title = 'Magazine')}}">See the updated catalogue....</a>
+            {% endif %}
          </div>
 
-         <div class="col-md-4 col-md-offset-4">
-            <form id="form4" method="POST" action="{{ url_for('delete_journal') }}">
+         <div id="form4" class="col-md-4 col-md-offset-4">
+            <form method="POST" action="{{ url_for('delete_journal') }}">
                 <h2>Delete a Journal</h2>
                 <div class="mb-3">
-                    <label for="exampleInputEmail1">Journal topic</label>
-                    <input type="name" class="form-control" id="exampleInputName1" name="topic" placeholder="Enter Journal topic">
+                    <label for="exampleInputEmail1">Journal Id</label>
+                    <input type="integer" class="form-control" id="exampleInputName1" name="id" placeholder="Enter Journal Id">
                     <small id="emailHelp" class="form-text text-muted"></small>
                 </div>
                 <button type="submit" class="btn btn-primary">Delete</button>
             </form>
+            {% if text %}
+                <h3 style="text-align: center; color: green; background-color: blanchedalmond;">{{ text }}</h3>
+                <br>
+                <a href="{{url_for('display', title = 'Journal')}}">See the updated catalogue....</a>
+            {% endif %}
          </div>
     </center>
     <script>
