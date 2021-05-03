@@ -98,6 +98,8 @@
             .BookDetails tr:nth-child(even){
                 background-color: #f0ccae;
             }
+            
+            
             .row1{
                 background-color: rgb(166, 107, 221);
             }
@@ -191,7 +193,7 @@
                                     <th class="heading">Author</th>
                                     <th class="heading">Issue Date</th>
                                     <th class="heading">Due Date</th>
-                                    <th class="heading">Self-Renewal Date</th>
+                                    <!-- <th class="heading">Self-Renewal Date</th> -->
                                     <th class="heading">Fine</th>
                                     <th class="heading">Renew Book</th>
                                     
@@ -206,9 +208,9 @@
                                     <td class="heading">{{ row[2] }}</td>
                                     <td class="heading">{{ row[6] }}</td>
                                     <td class="heading">{{ row[7] }}</td>
-                                    {% if res_date %}
+                                    <!-- {% if res_date %}
                                     <td class="heading">{{ res_date }}</td>
-                                    {% endif %}
+                                    {% endif %} -->
                                     <td class="heading">{{ rw }}</td>
                                     <form method="POST" id="form1" action="{{ url_for('renew', id = row[0]) }}">
                                     <td class="heading"><button>Renew Book</button></td>
@@ -256,7 +258,7 @@
                                     <th class="heading">Author</th>
                                     <th class="heading">Issue Date</th>
                                     <th class="heading">Due Date</th>
-                                    <th class="heading">Self-Renewal Date</th>
+                                    <!-- <th class="heading">Self-Renewal Date</th> -->
                                     <th class="heading">Fine</th>
                                     <!-- <th class="heading">Renew CD</th> -->
                                     
@@ -269,11 +271,11 @@
                                     <td class="heading">{{ row[0] }}</td>
                                     <td class="heading">{{ row[1] }}</td>
                                     <td class="heading">{{ row[2] }}</td>
-                                    <td class="heading">{{ row[6] }}</td>
                                     <td class="heading">{{ row[7] }}</td>
-                                    {% if res_date %}
+                                    <td class="heading">{{ row[8] }}</td>
+                                    <!-- {% if res_date %}
                                     <td class="heading">{{ res_date }}</td>
-                                    {% endif %}
+                                    {% endif %} -->
                                     <td class="heading">{{ rw }}</td>
                                     <!-- <form method="POST" id="form1" action="">
                                         <td class="heading"><button>Renew Book</button></td>

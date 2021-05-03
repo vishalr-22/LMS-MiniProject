@@ -175,8 +175,6 @@ def resv_book():
         else:
             db.resv_book(table1,table2, data)
             return render_template('reserve.html',text1='Reserve Successfull')
-            # db.update_record(table1, Id = bookid, updated_data = {'Status': 1}, opt = 1)
-            # return render_template('reserve.html',text1='Reserve Successful')
     return render_template('reserve.html')
 
 @app.route('/resv_cd',methods=['POST','GET'])
