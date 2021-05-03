@@ -433,3 +433,12 @@ class dbservice:
             return result
         except Exception as ex:
             print(ex)
+
+    def delete_record_cd(self, table_name, id):
+        
+        delete_query = (f"DELETE FROM {table_name} WHERE Cd_Id = %(id)s")
+        try:
+            self.dbcursor.execute(delete_query, {'id':id})
+            self.connector.commit()
+        except Exception as e:
+            print(e)
