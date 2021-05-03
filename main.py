@@ -125,11 +125,12 @@ def resv_book():
         status = db.fetch_column_data('books', ['Status'], condition_name='Book_ID', condition_value=bookid)
         db.resv_book(table1,table2, data)
         if status[0][0] == 0:
-            return render_template('reserve.html',text1='Reserve Unsuccessfull')
+            return render_template('reserve.html',text1='Book is already issued by someone !')
         elif status[0][0] == 1:
-            return render_template('reserve.html',text1='Reserve Unsuccessfull')
+            return render_template('reserve.html',text1='Book is already reserved by someone !')
         else:
-            return render_template('reserve.html',text1='Reserve Successfull')
+            db.update_record(table1, Id = bookid, updated_data = {'Status': 1}, opt = 1)
+            return render_template('reserve.html',text1='Reserve Successful')
     return render_template('reserve.html')
 
 @app.route('/resv_cd',methods=['POST','GET'])
@@ -144,13 +145,13 @@ def resv_cd():
         db.resv_cd(table1,table2, data)
         status = db.fetch_column_data('Cd', ['Status'],'C_ID', cid)
         if status[0][0] == 0:
-            return render_template('reserve.html',text1='Reserve Unsuccessfull')
+            return render_template('reserve.html',text1='CD is already issued by someone !')
         elif status[0][0] == 1:
-            return render_template('reserve.html',text1='Reserve Unsuccessfull')
+            return render_template('reserve.html',text1='CD is already reserved by someone !')
         else:
-            return render_template('reserve.html',text1='Reserve Successfull')
+            db.update_record(table1, Id = cid, updated_data = {'Status': 1}, opt = 2)
+            return render_template('reserve.html',text1='Reserve Successful')
     return render_template('reserve.html')
-
 
 @app.route('/search_book',methods=['POST','GET'])
 def search_book():
@@ -194,7 +195,9 @@ def add_book():
         data = {'Title':title, 'Author':author, 'Publisher':publisher, 'Genre':genre, 'Price':price}
         db.add_record(table, data)
         return render_template('add_option.html',text='New Book added!')
-    return render_template('add_option.html')
+    else:
+        genres = db.fetch_column_data('Genres',['Id', 'Genre'])
+        return render_template('add_option.html', genres = genres)
 
 @app.route('/add_cd',methods=['POST','GET'])
 def add_cd():
@@ -209,7 +212,9 @@ def add_cd():
         data = {'Title':title, 'Author':author, 'Genre':genre, 'Company':company, 'CD_type':ctype, 'Price':price}
         db.add_record(table, data)
         return render_template('add_option.html', text='New CD added!')
-    return render_template('add_option.html')
+    else:
+        genres = db.fetch_column_data('Genres',['Id', 'Genre'])
+        return render_template('add_option.html', genres = genres)
 
 @app.route('/add_magz',methods=['POST','GET'])
 def add_magz():
@@ -240,8 +245,9 @@ def add_journal():
 def delete_book():
     if request.method=='POST':
         table = 'Books'
+        id = request.form.get('id')
         title = request.form.get('title')
-        db.delete_record(table, title)
+        db.delete_record(table, id, opt = 1)
         return render_template('delete_option.html', text='Book deleted successfully!')
     return render_template('delete_option.html')
 
@@ -249,8 +255,8 @@ def delete_book():
 def delete_cd():
     if request.method=='POST':
         table = 'CD'
-        title = request.form.get('title')
-        db.delete_record(table, title)
+        id = request.form.get('id')
+        db.delete_record(table, id, opt = 2)
         return render_template('delete_option.html', text='CD deleted successfully!')
     return render_template('delete_option.html')
 
@@ -258,8 +264,8 @@ def delete_cd():
 def delete_magz():
     if request.method=='POST':
         table = 'Magazine'
-        title = request.form.get('title')
-        db.delete_record(table, title)
+        id = request.form.get('id')
+        db.delete_record(table, id)
         return render_template('delete_option.html', text='Magazine deleted successfully!')
     return render_template('delete_option.html')
 
@@ -267,8 +273,8 @@ def delete_magz():
 def delete_journal():
     if request.method=='POST':
         table = 'Journal'
-        topic = request.form.get('topic')
-        db.delete_record(table, topic)
+        id = request.form.get('id')
+        db.delete_record(table, id)
         return render_template('delete_option.html', text='Journal deleted successfully!')
     return render_template('delete_option.html')
 

@@ -17,11 +17,52 @@ class dbservice:
         self.dbcursor.execute('USE library')
 
     def create_table(self):
+
+        self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `Genres`(
+            `Id` INT NOT NULL AUTO_INCREMENT,
+            `Genre` VARCHAR(30) NOT NULL UNIQUE,
+            PRIMARY KEY(`Id`)
+        );''')
+
+        try:
+            self.dbcursor.execute('''INSERT INTO Genres (Genre) 
+            VALUES ('Academics');''') 
+
+            self.dbcursor.execute('''INSERT INTO Genres (Genre) 
+            VALUES ('Autobiography/Biography');''')
+
+            self.dbcursor.execute('''INSERT INTO Genres (Genre) 
+            VALUES ('Comic/Comedy');''')
+
+            self.dbcursor.execute('''INSERT INTO Genres (Genre) 
+            VALUES ('Epic');''') 
+
+            self.dbcursor.execute('''INSERT INTO Genres (Genre) 
+            VALUES ('Fiction');''')
+
+            self.dbcursor.execute('''INSERT INTO Genres (Genre) 
+            VALUES ('History');''')
+
+            self.dbcursor.execute('''INSERT INTO Genres (Genre) 
+            VALUES ('Knowledge');''')
+
+            self.dbcursor.execute('''INSERT INTO Genres (Genre) 
+            VALUES ('Poetry');''')
+
+            self.dbcursor.execute('''INSERT INTO Genres (Genre) 
+            VALUES ('Sci-Fiction');''')  
+
+            self.dbcursor.execute('''INSERT INTO Genres (Genre) 
+            VALUES ('Short stories');''')
+
+        except Exception as e:
+            pass
+        
         self.dbcursor.execute(''' CREATE TABLE IF NOT EXISTS `Books` (
             `Book_ID` INT NOT NULL AUTO_INCREMENT,
             `Title` VARCHAR(40) NOT NULL,
             `Author` VARCHAR(40) NOT NULL,
-            `Genre` VARCHAR(20) NOT NULL,
+            `Genre` VARCHAR(30) NOT NULL,
             `Publisher` VARCHAR(40) NOT NULL,
             `Price` FLOAT NOT NULL,
             `Status` TINYINT DEFAULT 2,
@@ -32,7 +73,7 @@ class dbservice:
             `C_ID` INT NOT NULL AUTO_INCREMENT,
             `Title` VARCHAR(40) NOT NULL,
             `Author` VARCHAR(40) NOT NULL,
-            `Genre` VARCHAR(20) NOT NULL,
+            `Genre` VARCHAR(30) NOT NULL,
             `Company` VARCHAR(40) NOT NULL,
             `CD_type` VARCHAR(20) NOT NULL,
             `Price` FLOAT NOT NULL,
@@ -164,14 +205,10 @@ class dbservice:
     def resv_book(self, table1, table2, data):
         bookid = data["Book_Id"]
         try:
-            select_query = (f'UPDATE {table1} SET Status=1 WHERE Book_Id=%(bookid)s AND status=2')
-            self.dbcursor.execute(select_query,{'bookid':bookid})
-
             username = data["username"]
             date = data["Reserve_date"]
             select_query2 = (f'INSERT INTO {table2} VALUES(%(username)s, %(bookid)s, %(date)s)')
-            self.dbcursor.execute(select_query2,{'username':username, 'bookid':bookid, 'date':date})
-            
+            self.dbcursor.execute(select_query2,{'username':username, 'bookid':bookid, 'date':date})   
             self.connector.commit()
         except Exception as e:
             print(e)    
@@ -179,19 +216,14 @@ class dbservice:
     def resv_cd(self, table1, table2, data):
         cid = data["Cd_Id"]
         try:
-            select_query = (f'UPDATE {table1} SET Status=1 WHERE C_ID=%(cid)s AND status=2')
-            self.dbcursor.execute(select_query,{'cid':cid})
-
             username = data["username"]
             date = data["Reserve_date"]
             select_query2 = (f'INSERT INTO {table2} VALUES(%(username)s, %(cid)s, %(date)s)')
-            self.dbcursor.execute(select_query2,{'username':username, 'cid':cid, 'date':date})
-            
+            self.dbcursor.execute(select_query2,{'username':username, 'cid':cid, 'date':date})     
             self.connector.commit()
         except Exception as e:
             print(e)    
         
-
     def search_book(self, table_name,title):
         select_query = (f'SELECT * FROM {table_name} WHERE Title=%(title)s AND status=2')
 
@@ -215,8 +247,6 @@ class dbservice:
             return records
         except Exception as e:
             print(e)
-
-    
 
     def fetch_reserve_date(self, table_name, username):
         select_query = (f'SELECT Reserve_date FROM {table_name} WHERE Username=%(user)s')
@@ -293,7 +323,6 @@ class dbservice:
             print(e)
         return 0
 
-
     def add_record(self, table_name, input_data):
         keys = list(input_data.keys())
         
@@ -326,19 +355,19 @@ class dbservice:
             print(e)
         return records
 
-    def delete_record(self, table_name, title, opt = 0):
+    def delete_record(self, table_name, id, opt = 0):
         if opt == 0:
             if table_name == 'Journal':
-                delete_query = (f"DELETE FROM {table_name} WHERE Topic = %(title)s")
+                delete_query = (f"DELETE FROM {table_name} WHERE J_Id = %(id)s")
             else:
-                delete_query = (f"DELETE FROM {table_name} WHERE Title = %(title)s")
+                delete_query = (f"DELETE FROM {table_name} WHERE Magz_Id = %(id)s")
         else:
             if opt == 1:
-                delete_query = (f"DELETE FROM {table_name} WHERE Book_Id = %(title)s")
+                delete_query = (f"DELETE FROM {table_name} WHERE Book_Id = %(id)s")
             elif opt == 2:
-                delete_query = (f"DELETE FROM {table_name} WHERE C_Id = %(title)s")
+                delete_query = (f"DELETE FROM {table_name} WHERE C_Id = %(id)s")
         try:
-            self.dbcursor.execute(delete_query, {'title':title})
+            self.dbcursor.execute(delete_query, {'id':id})
             self.connector.commit()
         except Exception as e:
             print(e)

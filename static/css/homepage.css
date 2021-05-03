@@ -1,8 +1,16 @@
 body{
     background-color:whitesmoke;
+    background-image: url('../images/librarybg2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
-h2{
-    color:black;
+h1{
+    margin-top: 5%;
+    color: rgb(255, 255, 255);
+    font-family:'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-style: oblique;
+    /* font-size: larger; */
 }
 #b1{
     margin: 0px;
@@ -16,7 +24,7 @@ h2{
     font-size: 20px; 
 }
 div{
-    border: 3px solid black;
+    border: 5px solid rgb(255, 255, 255);
     margin: auto;
     text-align: center;
     width: 40%;
