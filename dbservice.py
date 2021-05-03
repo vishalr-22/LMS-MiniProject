@@ -11,10 +11,10 @@ class dbservice:
         self.create_table()
     
     def connect_database(self):
-        self.connector = mysql.connect(host='127.0.0.1', user='root', password='vishal')
+        self.connector = mysql.connect(host='127.0.0.1', user='root', password='mysql27')
 
         self.dbcursor = self.connector.cursor()
-        self.dbcursor.execute('USE library_management_sys')
+        self.dbcursor.execute('USE Library')
 
     def create_table(self):
 
@@ -225,10 +225,10 @@ class dbservice:
             print(e)    
         
     def search_book(self, table_name,title):
-        select_query = (f'SELECT * FROM {table_name} WHERE Title=%(title)s AND status=2')
+        select_query = (f"SELECT * FROM {table_name} WHERE Title LIKE '%{title}%' AND status = 2")
 
         try:
-            self.dbcursor.execute(select_query,{'title':title})
+            self.dbcursor.execute(select_query)
             records = self.dbcursor.fetchone()
         except Exception as e:
             print(e)

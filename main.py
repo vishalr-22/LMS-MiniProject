@@ -6,6 +6,7 @@ from datetime import timedelta
 app = Flask(__name__)
 app.secret_key = "super secret key"
 
+un = ""
 db = dbservice()
 
 def check_update_data(updated_data):
@@ -37,19 +38,20 @@ def signup():
 def signin_user():
     if request.method=='POST':
         table = 'User'
-        username = request.form.get('username')
+        global un
+        un = request.form.get('username')
         upassword = request.form.get('upassword')
-        data = {'Username':username ,'Password':upassword}
+        data = {'Username':un ,'Password':upassword}
         val= db.signin_admin(table, data)
         if val == 1:
-            record = db.fetch_user_records(table,username)
-            rec = db.fetch_books_records('user_issue',username)
-            fine = db.fine_calc('user_issue', username)
-            res_book = db.reserved_book_records('user_reserve',username)
-            rec2 = db.fetch_cd_records('user_issue2',username)
-            fine2 = db.fine_calc('user_issue2', username)
-            res_cd = db.reserved_book_records('user_reserve2',username)
-            return render_template('studentdashboard.html',record=record,rec=rec,rec2=fine ,res_date='hello',rec3=res_book,rec4=rec2,rec5=fine2,rec6=res_cd)
+            record = db.fetch_user_records(table,un)
+            rec = db.fetch_books_records('user_issue',un)
+            fine = db.fine_calc('user_issue', un)
+            res_book = db.reserved_book_records('user_reserve',un)
+            rec2 = db.fetch_cd_records('user_issue2',un)
+            fine2 = db.fine_calc('user_issue2', un)
+            res_cd = db.reserved_book_records('user_reserve2',un)
+            return render_template('studentdashboard.html',record=record,rec=rec,rec2=fine ,rec3=res_book,rec4=rec2,rec5=fine2,rec6=res_cd)
         else:
             return render_template('signin.html',text='Invalid Credentials!')
     return render_template('signin.html')
@@ -70,7 +72,18 @@ def signin_admin():
 
 @app.route('/studentdashboard',methods=['POST','GET'])
 def studentdashboard():
-    return render_template('studentdashboard.html')
+    table = 'User_issue'
+    table2 = 'User'
+    global un
+    username = un
+    record = db.fetch_user_records(table2, username)
+    rec = db.fetch_books_records(table, username)
+    fine = db.fine_calc(table, username)
+    res_book = db.reserved_book_records('user_reserve',username)
+    rec2 = db.fetch_cd_records('user_issue2',username)
+    fine2 = db.fine_calc('user_issue2', username)
+    res_cd = db.reserved_book_records('user_reserve2',username)
+    return render_template('studentdashboard.html', record=record,rec=rec,rec2=fine, rec3=res_book,rec4=rec2,rec5=fine2,rec6=res_cd)
 
 @app.route('/display2', methods = ['POST', 'GET'])
 def display2():
@@ -101,7 +114,7 @@ def renew(id):
     fine2 = db.fine_calc('user_issue2', username)
     res_cd = db.reserved_book_records('user_reserve2',username)
     if extension == 0: 
-        return render_template('studentdashboard.html',record=record,rec=rec,rec2=fine ,res_date='hello',rec3=res_book,rec4=rec2,rec5=fine2,rec6=res_cd)
+        return render_template('studentdashboard.html',record=record,rec=rec,rec2=fine, rec3=res_book,rec4=rec2,rec5=fine2,rec6=res_cd)
     else:
         flash('You have already renewed your book for one time !')
         return render_template('studentdashboard.html', record=record,rec=rec,rec2=fine ,res_date='hello',rec3=res_book,rec4=rec2,rec5=fine2,rec6=res_cd)
@@ -174,7 +187,7 @@ def resv_book():
             return render_template('reserve.html',text1='Book is already reserved by someone !')
         else:
             db.resv_book(table1,table2, data)
-            return render_template('reserve.html',text1='Reserve Successfull')
+            return render_template('reserve.html',text1='Reserve Successful')
     return render_template('reserve.html')
 
 @app.route('/resv_cd',methods=['POST','GET'])
@@ -373,7 +386,7 @@ def issue_cd():
         user = db.fetch_column_data(table, ['User_Id', 'Username'], condition_name = 'Username', condition_value = username)
         cd = db.fetch_column_data(table2, ['Status'], condition_name = 'C_ID', condition_value = cdid)
         noc = db.count_records('User_issue2', user[0][0])
-        if cd[0][0] == 1 and noc[0] < 2:
+        if cd[0][0] == 2 and noc[0] < 2:
             data = {'User_Id': user[0][0], 'Username': user[0][1], 'C_ID': cdid, 'Issue_date': issue_date, 'Due_date': due_date}
             db.add_record('User_Issue2', data)
             db.update_record(table2, Id = cdid, updated_data = {'Status': 0}, opt = 2)
