@@ -106,6 +106,51 @@ def renew(id):
         flash('You have already renewed your book for one time !')
         return render_template('studentdashboard.html', record=record,rec=rec,rec2=fine ,res_date='hello',rec3=res_book,rec4=rec2,rec5=fine2,rec6=res_cd)
 
+@app.route('/cancel_resv/<id>', methods = ['POST', 'GET'])
+def cancel_resv_book(id):
+    
+    table = 'user_reserve'
+    table2 = 'books'
+    t = db.fetch_column_data(table, ['Username'], condition_name = 'Book_id', condition_value = id)
+    
+    username = t[0][0]
+    print(username)
+    db.update_record(table2, Id = id, updated_data = {'Status': 2}, opt = 1)
+    db.delete_record(table,id, opt=1)
+
+    record123 = db.fetch_user_records('user',username)
+    rec = db.fetch_books_records('user_issue',username)
+    fine = db.fine_calc('user_issue', username)
+    res_book = db.reserved_book_records('user_reserve',username)
+    rec2 = db.fetch_cd_records('user_issue2',username)
+    fine2 = db.fine_calc('user_issue2', username)
+    res_cd = db.reserved_book_records('user_reserve2',username)
+    
+    return render_template('studentdashboard.html',record=record123,rec=rec,rec2=fine ,res_date='hello',rec3=res_book,rec4=rec2,rec5=fine2,rec6=res_cd)
+    
+@app.route('/cancel_resv/<id>', methods = ['POST', 'GET'])
+def cancel_resv_cd(id):
+    
+    table = 'user_reserve2'
+    table2 = 'cd'
+    t = db.fetch_column_data(table, ['Username'], condition_name = 'Cd_Id', condition_value = id)
+    username = t[0][0]
+    db.update_record(table2, Id = id, updated_data = {'Status': 2}, opt = 2)
+    db.delete_record(table,id, opt=2)
+
+    record123 = db.fetch_user_records('user',username)
+    rec = db.fetch_books_records('user_issue',username)
+    fine = db.fine_calc('user_issue', username)
+    res_book = db.reserved_book_records('user_reserve',username)
+    rec2 = db.fetch_cd_records('user_issue2',username)
+    fine2 = db.fine_calc('user_issue2', username)
+    res_cd = db.reserved_book_records('user_reserve2',username)
+    
+    return render_template('studentdashboard.html',record=record123,rec=rec,rec2=fine ,res_date='hello',rec3=res_book,rec4=rec2,rec5=fine2,rec6=res_cd)
+    
+
+
+
 @app.route('/reserve1',methods=['POST','GET'])
 def reserve1():
     if request.method=='POST':
@@ -123,12 +168,12 @@ def resv_book():
         date = request.form.get('date')
         data = {'username':username, 'Book_Id':bookid, 'Reserve_date':date }
         status = db.fetch_column_data('books', ['Status'], condition_name='Book_ID', condition_value=bookid)
-        db.resv_book(table1,table2, data)
         if status[0][0] == 0:
             return render_template('reserve.html',text1='Reserve Unsuccessfull')
         elif status[0][0] == 1:
             return render_template('reserve.html',text1='Reserve Unsuccessfull')
         else:
+            db.resv_book(table1,table2, data)
             return render_template('reserve.html',text1='Reserve Successfull')
     return render_template('reserve.html')
 

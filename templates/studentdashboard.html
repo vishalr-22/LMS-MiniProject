@@ -18,21 +18,24 @@
             }
             body{
                 font-family: Arial, Helvetica, sans-serif;
-                background-color: rgb(36, 110, 175);
-            }
+                background-image: linear-gradient(#43cea2,#185a9d);
+    
+                }    
             #studettable{
-                border-width: 1px;
+                border-width: 0px;
                 border-color: rgb(129, 52, 71);
                 border-style: solid;
                 font-size: 20px;
                 padding: 10px;
                 background-color: rgb(228, 205, 255);
-                border-radius: 5px;
+                border-radius: 10px;
+                font-family:Verdana, Geneva, Tahoma, sans-serif;
             }
             .studet{
                 padding: 10px;
                 text-align: left;
                 margin: 10px;
+                padding: 2%;
             }
             .container ul{
                 width:100%;
@@ -48,12 +51,14 @@
                 
                 float: left;
                 width: 200px;
-                height: 40px;
+                height: 60px;
                 background-color: black;
                 color: white ;
                 line-height: 40px;
                 text-align: center;
                 text-decoration: none;
+                padding-top:1%;
+                font-size: large;
             }
             ul li a{
                 text-decoration: none;
@@ -129,7 +134,7 @@
             {% endif %}
         {% endwith %}
         <center>
-            <div class="container" id="full" style="background-color: rgba(193, 160, 245, 0.849);">
+            <div class="container" id="full" >
                 <h1>Welcome {{ record[0] }}</h1><br>
                 <h3>Student Details</h3>
                 <div>
@@ -162,7 +167,7 @@
                         <li style="cursor:default; "><a href="{{ url_for('reserve1') }}" style="color: white;">Reservation</a>
                         <li><a style="cursor: pointer; color: white;" href="{{ url_for('display2') }}">Catalogue</a></li>
                         <li><a style="cursor: pointer;">Contact Us</a></li>
-                        <li><a style="cursor: pointer;">Sign Out</a></li>
+                        <li><a href="#" onclick="javascript:window.history.back(-1);return false;" style="cursor: pointer;color: white;">Sign Out</a></li>
                     </ul>
                 </div>
                 </center>
@@ -223,14 +228,16 @@
                                     
                                     <th class="heading">Book ID</th>
                                     <th class="heading">Reserve Date</th>
-                                    <!-- <th class="heading">Cancel Reservation</th> -->
+                                    <th class="heading">Cancel Reservation</th>
                                 </tr>
 
                                 {% for j in rec3 %}
                                 <tr class="row12">
                                     <td class="heading">{{ j[1] }}</td>
                                     <td class="heading">{{ j[2] }}</td>
-                                    <!-- <td class="heading"><button>Cancel Reservation</button></td> -->
+                                    <form method="POST" id="form1" action="{{ url_for('cancel_resv_book', id = j[1]) }}">
+                                        <td class="heading"><button>Cancel Reservation</button></td>
+                                    </form>
                                 </tr>
                                 {% endfor %}
                             </table>
@@ -285,7 +292,7 @@
                                     
                                     <th class="heading">CD ID</th>
                                     <th class="heading">Reserve Date</th>
-                                    <!-- <th class="heading">Cancel Reservation</th> -->
+                                    <th class="heading">Cancel Reservation</th>
                                     
                                 </tr>
 
@@ -293,7 +300,9 @@
                                 <tr class="row12">
                                     <td class="heading">{{ j[1] }}</td>
                                     <td class="heading">{{ j[2] }}</td>
-                                    <!-- <td class="heading"><button>Cancel Reservation</button></td> -->
+                                    <form method="POST" id="form1" action="{{ url_for('cancel_resv_cd', id = j[1])}}">
+                                        <td class="heading"><button>Cancel Reservation</button></td>
+                                    </form>
                                     
                                 </tr>
                                 {% endfor %}
