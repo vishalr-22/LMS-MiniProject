@@ -202,7 +202,6 @@ def resv_cd():
         cid = request.form.get('cdid')
         date = request.form.get('date')
         data = {'username':username, 'Cd_Id':cid, 'Reserve_date':date }
-        db.resv_cd(table1,table2, data)
         status = db.fetch_column_data('Cd', ['Status'],'C_ID', cid)
         if status[0][0] == 0:
             return render_template('reserve.html',text1='CD is already issued by someone !')
@@ -211,7 +210,7 @@ def resv_cd():
         elif status[0][0] == 2:
             db.update_record(table1, Id = cid, updated_data = {'Status': 1}, opt = 2)
             db.resv_cd(table1,table2, data)
-            return render_template('reserve.html',text1='Reserve Successful')
+            return render_template('reserve.html',text1='Reserve Successfull')
         else:
             return render_template('reserve.html',text1='Reserve Unsuccessfull')
     return render_template('reserve.html')
