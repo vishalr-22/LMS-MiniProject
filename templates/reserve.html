@@ -189,18 +189,19 @@
                                 <th class="heading">Price</th>
                                 
                             </tr>
-
-                            {% if rec %}
+                            {% for i in rec %}
+                            {% if i %}
                             <tr class="row12">
-                                <td class="heading">{{ rec[0] }}</td>
-                                <td class="heading">{{ rec[1] }}</td>
-                                <td class="heading">{{ rec[2] }}</td>
-                                <td class="heading">{{ rec[3] }}</td>
-                                <td class="heading">{{ rec[4] }}</td>
-                                <td class="heading">{{ rec[5] }}</td>
+                                <td class="heading">{{ i[0] }}</td>
+                                <td class="heading">{{ i[1] }}</td>
+                                <td class="heading">{{ i[2] }}</td>
+                                <td class="heading">{{ i[3] }}</td>
+                                <td class="heading">{{ i[4] }}</td>
+                                <td class="heading">{{ i[5] }}</td>
                                 
                             </tr>
                             {% endif %}
+                            {% endfor %}
                         </table>
                     </div>
                     <br>
@@ -243,19 +244,20 @@
                                 <th class="heading">Price</th>
                                 
                             </tr>
-
-                            {% if rec2 %}
+                            {% for i in rec2 %}
+                            {% if i %}
                             <tr class="row12">
-                                <td class="heading">{{ rec2[0] }}</td>
-                                <td class="heading">{{ rec2[1] }}</td>
-                                <td class="heading">{{ rec2[2] }}</td>
-                                <td class="heading">{{ rec2[3] }}</td>
-                                <td class="heading">{{ rec2[4] }}</td>
-                                <td class="heading">{{ rec2[5] }}</td>
-                                <td class="heading">{{ rec2[6] }}</td>
+                                <td class="heading">{{ i[0] }}</td>
+                                <td class="heading">{{ i[1] }}</td>
+                                <td class="heading">{{ i[2] }}</td>
+                                <td class="heading">{{ i[3] }}</td>
+                                <td class="heading">{{ i[4] }}</td>
+                                <td class="heading">{{ i[5] }}</td>
+                                <td class="heading">{{ i[6] }}</td>
                                 
                             </tr>
                             {% endif %}
+                            {% endfor %}
                         </table>
                     </div>
                     <br>

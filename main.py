@@ -76,6 +76,7 @@ def studentdashboard():
     table2 = 'User'
     global un
     username = un
+    print(username)
     record = db.fetch_user_records(table2, username)
     rec = db.fetch_books_records(table, username)
     fine = db.fine_calc(table, username)
@@ -188,9 +189,9 @@ def resv_book():
         elif status[0][0] == 2:
             db.update_record(table1, Id = bookid, updated_data = {'Status': 1}, opt = 1)
             db.resv_book(table1,table2, data)
-            return render_template('reserve.html',text1='Reserve Successfull')
+            return render_template('reserve.html',text1='Reserve Successful')
         else:
-            return render_template('reserve.html',text1='Reserve Unsuccessfull')
+            return render_template('reserve.html',text1='Reserve Unsuccessful')
     return render_template('reserve.html')
 
 @app.route('/resv_cd',methods=['POST','GET'])
@@ -210,9 +211,9 @@ def resv_cd():
         elif status[0][0] == 2:
             db.update_record(table1, Id = cid, updated_data = {'Status': 1}, opt = 2)
             db.resv_cd(table1,table2, data)
-            return render_template('reserve.html',text1='Reserve Successfull')
+            return render_template('reserve.html',text1='Reserve Successful')
         else:
-            return render_template('reserve.html',text1='Reserve Unsuccessfull')
+            return render_template('reserve.html',text1='Reserve Unsuccessful')
     return render_template('reserve.html')
 
 @app.route('/search_book',methods=['POST','GET'])
@@ -221,7 +222,7 @@ def search_book():
         table = 'books'
         bookname = request.form.get('bookname')
         records = db.search_book(table, bookname)
-        if records == 0:
+        if records == None:
             return render_template('reserve.html',text2='Book Not Available')
         else:
             return render_template('reserve.html',rec=records)
@@ -233,7 +234,7 @@ def search_cd():
         table = 'cd'
         cdname = request.form.get('cdname')
         records = db.search_book(table, cdname)
-        if records == 0:
+        if records == None:
             return render_template('reserve.html',text2='Book Not Available')
         else:
             return render_template('reserve.html',rec2=records)

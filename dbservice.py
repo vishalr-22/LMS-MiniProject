@@ -229,7 +229,7 @@ class dbservice:
 
         try:
             self.dbcursor.execute(select_query)
-            records = self.dbcursor.fetchone()
+            records = self.dbcursor.fetchall()
         except Exception as e:
             print(e)
         if records == None:
@@ -294,7 +294,7 @@ class dbservice:
         lst = []
         for i in records:
             if i[0] < date.today():
-                lst.append(5*(i[0]-date.today()).days)
+                lst.append(5*(date.today()-i[0]).days)
             else:
                 lst.append(0)
         return lst

@@ -57,26 +57,26 @@
                 line-height: 40px;
                 text-align: center;
                 text-decoration: none;
-                padding-top:1%;
+                /* padding-top:1%; */
                 font-size: large;
             }
             ul li a{
                 text-decoration: none;
                 display: block;
+                padding-top:5%;
+                width: 200px;
+                height: 60px;
             }
             ul li a:hover{
                 background-color:rgb(207, 130, 238);
+                line-height: 40px;
+                display: block;
                 text-decoration: none;
+                height: 60px;
+                width: 200px;
                 color: white;
             }
-            ul li ul li{
-                display:none;
-                opacity: 99%;
-            }
-            ul li:hover ul li{
-                display: block;
-                cursor: pointer;
-            }
+            
             .radio-container{
                 border-color: black;
                 font-size: 20px;
@@ -96,9 +96,11 @@
                 margin: auto;
             }
             .BookDetails tr:nth-child(even){
+                background-color: #eeba8f;
+            }
+            .BookDetails tr:nth-child(odd){
                 background-color: #f0ccae;
             }
-            
             
             .row1{
                 background-color: rgb(166, 107, 221);
@@ -166,10 +168,10 @@
                 <center>
                 <div class="container" style="width: 100%; ">
                     <ul>
-                        <li style="cursor:default; "><a href="{{ url_for('reserve1') }}" style="color: white;">Reservation</a>
+                        <li style="cursor:default; "><a href="{{ url_for('reserve1') }}" style="color: white;">Reservation</a></li>
                         <li><a style="cursor: pointer; color: white;" href="{{ url_for('display2') }}">Catalogue</a></li>
-                        <li><a style="cursor: pointer;" href="{{ url_for('aboutus') }}">About Us</a></li>
-                        <li><a href="{{ url_for('homepage') }}">Sign Out</a></li>
+                        <li><a style="cursor: pointer; color: white;" href="{{ url_for('aboutus') }}">About Us</a></li>
+                        <li><a style="cursor: pointer; color: white;" href="{{ url_for('homepage') }}">Sign Out</a></li>
                     </ul>
                 </div>
                 </center>
@@ -187,7 +189,7 @@
                         <h3>Book Details</h3>
                         <div class="table-responsive">
                             <table class="BookDetails">
-                                <tr class="row1">
+                                <tr class="row1" style="background-color: rgb(166, 107, 221);">
                                     <th class="heading">Book ID</th>
                                     <th class="heading">Title</th>
                                     <th class="heading">Author</th>
@@ -226,7 +228,7 @@
                         <h3>Reserved Book Details</h3>
                         <div class="table-responsive">
                             <table class="BookDetails">
-                                <tr class="row1">
+                                <tr class="row1" style="background-color: rgb(166, 107, 221);">
                                     
                                     <th class="heading">Book ID</th>
                                     <th class="heading">Reserve Date</th>
@@ -252,7 +254,7 @@
                         <h3>CD Details</h3>
                         <div class="table-responsive">
                             <table class="BookDetails">
-                                <tr class="row1">
+                                <tr class="row1" style="background-color: rgb(166, 107, 221);">
                                     <th class="heading">CD ID</th>
                                     <th class="heading">Title</th>
                                     <th class="heading">Author</th>
@@ -290,7 +292,7 @@
                         <h3>Reserved CD Details</h3>
                         <div class="table-responsive">
                             <table class="BookDetails">
-                                <tr class="row1">
+                                <tr class="row1" style="background-color: rgb(166, 107, 221);">
                                     
                                     <th class="heading">CD ID</th>
                                     <th class="heading">Reserve Date</th>
