@@ -4,6 +4,18 @@ body{
     box-sizing: border-box; 
     background-image: linear-gradient(180deg, rgba(0, 30, 53, 0.75), rgba(0, 30, 53, 0.75)), url('static/image/allback.jpg');
 }
+#myInput1, #myInput2,#myInput3,#myInput4{
+    background-image: url('/css/searchicon.png'); 
+    background-position: 10px 12px; 
+    background-repeat: no-repeat; 
+    margin: auto;
+    width: 50%; 
+    font-size: 16px; 
+    padding: 12px 20px 12px 40px; 
+    border: 1px solid #ddd; 
+    margin-top: 10px;
+    margin-bottom: 12px;
+}
 
 table {
     width: 100%;

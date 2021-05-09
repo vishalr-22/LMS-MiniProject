@@ -76,6 +76,7 @@ def studentdashboard():
     table2 = 'User'
     global un
     username = un
+    print(username)
     record = db.fetch_user_records(table2, username)
     rec = db.fetch_books_records(table, username)
     fine = db.fine_calc(table, username)
