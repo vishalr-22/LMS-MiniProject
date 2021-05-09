@@ -31,7 +31,7 @@ def signup():
         password = request.form.get('password')
         data = {'First_Name':fname ,'Last_Name':lname,'Phone':phoneno,'email':email,'Username':username,'Password':password}
         db.signup(table, data)
-        return render_template('signin.html',text='Signup Successfull!')
+        return render_template('signin.html',text='Signup Successful!')
     return render_template('signup.html')
 
 @app.route('/signin_user',methods=['POST','GET'])
@@ -121,13 +121,10 @@ def renew(id):
 
 @app.route('/cancel_resv_book/<id>', methods = ['POST', 'GET'])
 def cancel_resv_book(id):
-    
     table = 'user_reserve'
     table2 = 'books'
     t = db.fetch_column_data(table, ['Username'], condition_name = 'Book_id', condition_value = id)
-    
     username = t[0][0]
-    print(username)
     db.update_record(table2, Id = id, updated_data = {'Status': 2}, opt = 1)
     db.delete_record(table,id, opt=1)
 
@@ -143,7 +140,6 @@ def cancel_resv_book(id):
     
 @app.route('/cancel_resv_cd/<id>', methods = ['POST', 'GET'])
 def cancel_resv_cd(id):
-    
     table = 'user_reserve2'
     table2 = 'cd'
     t = db.fetch_column_data(table, ['Username'], condition_name = 'Cd_Id', condition_value = id)
@@ -188,9 +184,9 @@ def resv_book():
         elif status[0][0] == 2:
             db.update_record(table1, Id = bookid, updated_data = {'Status': 1}, opt = 1)
             db.resv_book(table1,table2, data)
-            return render_template('reserve.html',text1='Reserve Successfull')
+            return render_template('reserve.html',text1='Reserve Successful')
         else:
-            return render_template('reserve.html',text1='Reserve Unsuccessfull')
+            return render_template('reserve.html',text1='Reserve Unsuccessful')
     return render_template('reserve.html')
 
 @app.route('/resv_cd',methods=['POST','GET'])
@@ -210,9 +206,9 @@ def resv_cd():
         elif status[0][0] == 2:
             db.update_record(table1, Id = cid, updated_data = {'Status': 1}, opt = 2)
             db.resv_cd(table1,table2, data)
-            return render_template('reserve.html',text1='Reserve Successfull')
+            return render_template('reserve.html',text1='Reserve Successful')
         else:
-            return render_template('reserve.html',text1='Reserve Unsuccessfull')
+            return render_template('reserve.html',text1='Reserve Unsuccessful')
     return render_template('reserve.html')
 
 @app.route('/search_book',methods=['POST','GET'])
@@ -221,7 +217,7 @@ def search_book():
         table = 'books'
         bookname = request.form.get('bookname')
         records = db.search_book(table, bookname)
-        if records == 0:
+        if records == None:
             return render_template('reserve.html',text2='Book Not Available')
         else:
             return render_template('reserve.html',rec=records)
@@ -233,7 +229,7 @@ def search_cd():
         table = 'cd'
         cdname = request.form.get('cdname')
         records = db.search_book(table, cdname)
-        if records == 0:
+        if records == None:
             return render_template('reserve.html',text2='Book Not Available')
         else:
             return render_template('reserve.html',rec2=records)

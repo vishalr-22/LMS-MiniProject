@@ -11,10 +11,10 @@ class dbservice:
         self.create_table()
     
     def connect_database(self):
-        self.connector = mysql.connect(host='127.0.0.1', user='root', password='vishal')
+        self.connector = mysql.connect(host='127.0.0.1', user='root', password='mysql27')
 
         self.dbcursor = self.connector.cursor()
-        self.dbcursor.execute('USE Library_management_sys')
+        self.dbcursor.execute('USE Library')
 
     def create_table(self):
 
@@ -139,7 +139,6 @@ class dbservice:
         );''')
 
         self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `User_Reserve`(
-            
             `Username` VARCHAR(25) NOT NULL,
             `Book_Id` INT UNIQUE NOT NULL,
             `Reserve_date` DATE NOT NULL,
@@ -148,7 +147,6 @@ class dbservice:
         );''')
 
         self.dbcursor.execute('''CREATE TABLE IF NOT EXISTS `User_Reserve2`(
-            
             `Username` VARCHAR(25) NOT NULL,
             `Cd_Id` INT UNIQUE NOT NULL,
             `Reserve_date` DATE NOT NULL,
@@ -229,7 +227,7 @@ class dbservice:
 
         try:
             self.dbcursor.execute(select_query)
-            records = self.dbcursor.fetchone()
+            records = self.dbcursor.fetchall()
         except Exception as e:
             print(e)
         if records == None:
@@ -294,7 +292,7 @@ class dbservice:
         lst = []
         for i in records:
             if i[0] < date.today():
-                lst.append(5*(i[0]-date.today()).days)
+                lst.append(5*(date.today() - i[0]).days)
             else:
                 lst.append(0)
         return lst
